@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "redpackutils:block/rainbow_beacon" }
+  }
+}

@@ -43,6 +43,9 @@ public class RedPackUtils
 
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
+        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(BlockRegistry.RAINBOW_BEACON_BLOCK);
+        }
     }
 
     @SubscribeEvent
