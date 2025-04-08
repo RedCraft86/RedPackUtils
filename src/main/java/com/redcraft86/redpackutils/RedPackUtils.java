@@ -1,5 +1,6 @@
 package com.redcraft86.redpackutils;
 
+import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.api.distmarker.Dist;
@@ -12,7 +13,10 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.slf4j.Logger;
+import net.minecraft.world.item.CreativeModeTabs;
+
+import com.redcraft86.redpackutils.items.ItemRegistry;
+import com.redcraft86.redpackutils.blocks.BlockRegistry;
 
 @Mod(RedPackUtils.MOD_ID)
 public class RedPackUtils
@@ -23,6 +27,10 @@ public class RedPackUtils
     public RedPackUtils(FMLJavaModLoadingContext context)
     {
         IEventBus modEventBus = context.getModEventBus();
+
+        ItemRegistry.register(modEventBus);
+        BlockRegistry.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
