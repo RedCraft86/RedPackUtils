@@ -11,7 +11,7 @@ import vazkii.botania.client.render.world.SkyblockSkyRenderer;
 import com.redcraft86.redpackutils.RedPackUtilsConfig;
 
 @Mixin(value = SkyblockSkyRenderer.class, remap = false)
-public class BotaniaSkyboxMixin {
+public class BotaniaSkyboxRendererMixin {
     // Botania's Garden of Glass skybox makes the stars really bright.
     // So we hijack botania's method that does that and stop it from doing anything.
     @Inject(method = "renderStars", at = @At("HEAD"), cancellable = true, require = 0)
