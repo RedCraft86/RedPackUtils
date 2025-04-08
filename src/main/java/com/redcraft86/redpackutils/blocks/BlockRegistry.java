@@ -2,7 +2,6 @@ package com.redcraft86.redpackutils.blocks;
 
 import java.util.function.Supplier;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -27,7 +26,7 @@ public class BlockRegistry {
     }
 
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block) {
-        return ItemRegistry.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        return ItemRegistry.ITEMS.register(name, () -> new ModBlockItem(block.get(), new Item.Properties()));
     }
 
     public static void register(IEventBus eventBus) {
