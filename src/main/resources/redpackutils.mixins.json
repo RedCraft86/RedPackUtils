@@ -4,10 +4,12 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "redpackutils.refmap.json",
   "mixins": [
-    "BotaniaSkyboxMixin"
+    "BotaniaSkyboxRendererMixin",
+    "CreativeInventoryScreenMixin"
   ],
   "client": [
-    "BotaniaSkyboxMixin"
+    "BotaniaSkyboxRendererMixin",
+    "CreativeInventoryScreenMixin"
   ],
   "minVersion": "0.8"
 }
