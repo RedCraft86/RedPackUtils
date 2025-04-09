@@ -2,22 +2,22 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "GGG",
-    "#@#",
-    "#$#"
+    "###",
+    "CRC",
+    "CGC"
   ],
   "key": {
     "#": {
+      "tag": "forge:stained_glass"
+    },
+    "C": {
       "item": "minecraft:cobblestone"
     },
-    "@": {
+    "R": {
       "item": "minecraft:redstone"
     },
-    "$": {
-      "item": "minecraft:glass"
-    },
     "G": {
-      "tag": "redpackutils:stained_glass"
+      "item": "minecraft:glass"
     }
   },
   "result": {
