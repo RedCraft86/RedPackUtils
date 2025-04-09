@@ -1,4 +1,4 @@
-package com.redcraft86.redpackutils.items;
+package com.redcraft86.redpackutils.registries.items;
 
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;

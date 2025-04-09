@@ -17,10 +17,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraft.world.item.CreativeModeTabs;
 
-import com.redcraft86.redpackutils.items.ItemRegistry;
-import com.redcraft86.redpackutils.blocks.BlockRegistry;
-
-import com.redcraft86.redpackutils.config.ClientConfig;
+import com.redcraft86.redpackutils.registries.items.ItemRegistry;
+import com.redcraft86.redpackutils.registries.blocks.BlockRegistry;
 
 @Mod(ModClass.MOD_ID)
 public class ModClass
