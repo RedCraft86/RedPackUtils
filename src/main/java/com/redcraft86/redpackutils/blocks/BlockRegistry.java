@@ -17,16 +17,16 @@ public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, RedPackUtils.MOD_ID);
 
     public static final RegistryObject<Block> RAINBOW_BEACON_BLOCK = registerBlock("rainbow_beacon",
-            () -> new RainbowBeaconBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+            () -> new RainbowBeaconBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)), true);
 
-    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
-        RegistryObject<T> toReturn = BLOCKS.register(name, block);
-        registerBlockItem(name, toReturn);
+    private static <T extends Block> RegistryObject<T> registerBlock(String ID, Supplier<T> block, boolean bTooltip) {
+        RegistryObject<T> toReturn = BLOCKS.register(ID, block);
+        registerBlockItem(ID, toReturn, bTooltip);
         return toReturn;
     }
 
-    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block) {
-        return ItemRegistry.ITEMS.register(name, () -> new ModBlockItem(block.get(), new Item.Properties()));
+    private static <T extends Block> void registerBlockItem(String ID, RegistryObject<T> block, boolean bTooltip) {
+        ItemRegistry.ITEMS.register(ID, () -> new ModBlockItem(block.get(), new Item.Properties(), ID, bTooltip));
     }
 
     public static void register(IEventBus eventBus) {

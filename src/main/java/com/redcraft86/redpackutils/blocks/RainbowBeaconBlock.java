@@ -1,6 +1,5 @@
 package com.redcraft86.redpackutils.blocks;
 
-import java.util.List;
 import net.minecraft.util.Mth;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -13,16 +12,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 
 public class RainbowBeaconBlock extends ModBlock {
-
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 8, 16);
 
     protected RainbowBeaconBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public List<String> getTooltipKeys() {
-        return List.of("rainbow_beacon");
     }
 
     @Override
