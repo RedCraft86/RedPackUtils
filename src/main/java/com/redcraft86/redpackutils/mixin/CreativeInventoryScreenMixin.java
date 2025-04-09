@@ -9,7 +9,7 @@ import net.minecraft.world.item.CreativeModeTab;
 
 import com.redcraft86.redpackutils.RedPackUtilsConfig;
 
-@Mixin(value = CreativeModeInventoryScreen.class)
+@Mixin(CreativeModeInventoryScreen.class)
 public class CreativeInventoryScreenMixin {
 
     // The creative inventory displays a tooltip on items stating the creative tab said item originates from
