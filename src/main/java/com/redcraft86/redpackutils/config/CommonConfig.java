@@ -14,22 +14,11 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonConfig
 {
-    private static final ForgeConfigSpec.BooleanValue SHULKER_DOUBLE_DROP;
-    private static final ForgeConfigSpec.BooleanValue DRAGON_ELYTRA_DROP;
     private static final ForgeConfigSpec.BooleanValue SPAWN_IN_VILLAGE;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> SPAWN_VILLAGE_BLACKLIST;
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     static {
-        BUILDER.push("Loot Tweaks");
-
-        SHULKER_DOUBLE_DROP = BUILDER.comment("Should Shulkers drop two Shulker Shells instead of one?")
-                .define("shulkerDoubleDrop", true);
-
-        DRAGON_ELYTRA_DROP = BUILDER.comment("Should the Ender Dragon drop an elytra?")
-                .define("dragonElytraDrop", true);
-
-        BUILDER.pop();
         BUILDER.push("Spawn Tweaks");
 
         SPAWN_IN_VILLAGE = BUILDER.comment("Whether the player should spawn at the nearest village within a 128 chunk radius.")
@@ -43,8 +32,6 @@ public class CommonConfig
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
-    public static boolean shulkerDoubleDrop = true;
-    public static boolean dragonElytraDrop = true;
     public static boolean spawnInVillage = true;
     public static Set<ResourceLocation> spawnVillageBlacklist = new HashSet<>();
 
@@ -52,8 +39,6 @@ public class CommonConfig
     static void onLoad(final ModConfigEvent event)
     {
         if (event.getConfig().getSpec() == SPEC) {
-            shulkerDoubleDrop = SHULKER_DOUBLE_DROP.get();
-            dragonElytraDrop = DRAGON_ELYTRA_DROP.get();
             spawnInVillage = SPAWN_IN_VILLAGE.get();
             if (spawnInVillage) {
                 spawnVillageBlacklist = SPAWN_VILLAGE_BLACKLIST.get().stream()
