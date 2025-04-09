@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0,
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:elytra"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "minecraft:entities/ender_dragon"
+}
