@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import vazkii.botania.client.render.world.SkyblockSkyRenderer;
-import com.redcraft86.redpackutils.RedPackUtilsConfig;
+import com.redcraft86.redpackutils.config.ClientConfig;
 
 @Mixin(value = SkyblockSkyRenderer.class, remap = false)
 public class BotaniaSkyboxRendererMixin {
@@ -17,7 +17,7 @@ public class BotaniaSkyboxRendererMixin {
     @Inject(method = "renderStars", at = @At("HEAD"), cancellable = true, require = 0)
     private static void StopRenderStars(VertexBuffer starVBO, PoseStack ms, Matrix4f projMat,
                                         float partialTicks, Runnable resetFog, CallbackInfo ci) {
-        if (RedPackUtilsConfig.disableGoGStars) {
+        if (ClientConfig.disableGoGStars) {
             ci.cancel();
         }
     }

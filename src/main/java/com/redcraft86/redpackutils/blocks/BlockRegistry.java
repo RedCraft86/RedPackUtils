@@ -10,11 +10,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-import com.redcraft86.redpackutils.RedPackUtils;
+import com.redcraft86.redpackutils.ModClass;
 import com.redcraft86.redpackutils.items.ItemRegistry;
 
 public class BlockRegistry {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, RedPackUtils.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModClass.MOD_ID);
 
     public static final RegistryObject<Block> RAINBOW_BEACON_BLOCK = registerBlock("rainbow_beacon",
             () -> new RainbowBeaconBlock(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)), true);

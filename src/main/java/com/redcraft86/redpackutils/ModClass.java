@@ -1,5 +1,7 @@
 package com.redcraft86.redpackutils;
 
+import com.redcraft86.redpackutils.config.ClientConfig;
+import com.redcraft86.redpackutils.config.ServerConfig;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.fml.common.Mod;
@@ -18,13 +20,15 @@ import net.minecraft.world.item.CreativeModeTabs;
 import com.redcraft86.redpackutils.items.ItemRegistry;
 import com.redcraft86.redpackutils.blocks.BlockRegistry;
 
-@Mod(RedPackUtils.MOD_ID)
-public class RedPackUtils
+import com.redcraft86.redpackutils.config.ClientConfig;
+
+@Mod(ModClass.MOD_ID)
+public class ModClass
 {
     public static final String MOD_ID = "redpackutils";
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public RedPackUtils(FMLJavaModLoadingContext context)
+    public ModClass(FMLJavaModLoadingContext context)
     {
         IEventBus modEventBus = context.getModEventBus();
 
@@ -34,7 +38,8 @@ public class RedPackUtils
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
-        context.registerConfig(ModConfig.Type.COMMON, RedPackUtilsConfig.SPEC);
+        context.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
+        context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)

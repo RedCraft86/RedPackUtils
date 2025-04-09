@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.world.item.CreativeModeTab;
 
-import com.redcraft86.redpackutils.RedPackUtilsConfig;
+import com.redcraft86.redpackutils.config.ClientConfig;
 
 @Mixin(CreativeModeInventoryScreen.class)
 public class CreativeInventoryScreenMixin {
@@ -18,6 +18,6 @@ public class CreativeInventoryScreenMixin {
     // a tab with the mod name, if there's a mod that displays mod name tooltips, the mod name can get stacked twice
     @Redirect(method = "getTooltipFromContainerItem", at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z"), require = 0)
     private boolean redirectHasNext(Iterator<CreativeModeTab> iterator) {
-        return !RedPackUtilsConfig.disableCreativeTabTips && iterator.hasNext();
+        return !ClientConfig.disableCreativeTabTips && iterator.hasNext();
     }
 }
