@@ -21,8 +21,8 @@ public class ClientConfig
 
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
-    public static boolean disableCreativeTabTips;
-    public static boolean disableGoGStars;
+    public static boolean disableCreativeTabTips = true;
+    public static boolean disableGoGStars = true;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
