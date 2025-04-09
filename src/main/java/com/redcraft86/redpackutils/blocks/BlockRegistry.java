@@ -17,7 +17,7 @@ public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, RedPackUtils.MOD_ID);
 
     public static final RegistryObject<Block> RAINBOW_BEACON_BLOCK = registerBlock("rainbow_beacon",
-            () -> new RainbowBeaconBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)), true);
+            () -> new RainbowBeaconBlock(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)), true);
 
     private static <T extends Block> RegistryObject<T> registerBlock(String ID, Supplier<T> block, boolean bTooltip) {
         RegistryObject<T> toReturn = BLOCKS.register(ID, block);
