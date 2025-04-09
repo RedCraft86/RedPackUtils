@@ -1,7 +1,5 @@
 package com.redcraft86.redpackutils;
 
-import com.redcraft86.redpackutils.config.ClientConfig;
-import com.redcraft86.redpackutils.config.ServerConfig;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.fml.common.Mod;
@@ -15,10 +13,14 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraft.world.item.CreativeModeTabs;
 
+import com.redcraft86.redpackutils.config.ClientConfig;
+import com.redcraft86.redpackutils.config.CommonConfig;
 import com.redcraft86.redpackutils.registries.items.ItemRegistry;
 import com.redcraft86.redpackutils.registries.blocks.BlockRegistry;
+import com.redcraft86.redpackutils.events.VillageSpawn;
 
 @Mod(ModClass.MOD_ID)
 public class ModClass
@@ -33,11 +35,16 @@ public class ModClass
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
 
+        modEventBus.addListener(this::loadComplete);
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
         context.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
-        context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
+        context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
+    }
+
+    private void loadComplete(final FMLLoadCompleteEvent event) {
+        MinecraftForge.EVENT_BUS.register(VillageSpawn.class);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
