@@ -1,21 +1,21 @@
-package com.redcraft86.redpackutils.blocks;
+package com.redcraft86.redpackutils.registries.blocks;
 
 import net.minecraft.util.Mth;
 import net.minecraft.core.BlockPos;
+import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-
 public class RainbowBeaconBlock extends ModBlock {
-    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 8, 16);
+    public static final VoxelShape SHAPE = box(0, 0, 0, 16, 8, 16);
 
     protected RainbowBeaconBlock(Properties properties) {
         super(properties);
+        addTooltip("rainbow_beacon").withStyle(ChatFormatting.GRAY);
     }
 
     @Override
