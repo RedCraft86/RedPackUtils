@@ -1,10 +1,9 @@
 package com.redcraft86.redpackutils.registries.items;
 
-import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
+import net.minecraft.world.item.Item;
 import com.redcraft86.redpackutils.ModClass;
 
 public class ItemRegistry {

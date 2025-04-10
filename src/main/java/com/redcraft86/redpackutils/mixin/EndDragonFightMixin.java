@@ -9,6 +9,7 @@ import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.level.dimension.end.EndDragonFight;
 import com.redcraft86.redpackutils.config.CommonConfig;
 
+
 @SuppressWarnings("FieldCanBeLocal")
 @Mixin(EndDragonFight.class)
 public class EndDragonFightMixin {

@@ -13,16 +13,12 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraft.world.item.CreativeModeTabs;
 
 import com.redcraft86.redpackutils.config.ClientConfig;
 import com.redcraft86.redpackutils.config.CommonConfig;
 import com.redcraft86.redpackutils.registries.items.ItemRegistry;
 import com.redcraft86.redpackutils.registries.blocks.BlockRegistry;
-import com.redcraft86.redpackutils.events.EntityInteraction;
-import com.redcraft86.redpackutils.events.MobGriefing;
-import com.redcraft86.redpackutils.events.VillageSpawn;
 
 @Mod(ModClass.MOD_ID)
 public class ModClass

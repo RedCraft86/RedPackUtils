@@ -4,9 +4,8 @@ import java.util.Iterator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.world.item.CreativeModeTab;
-
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import com.redcraft86.redpackutils.config.ClientConfig;
 
 @Mixin(CreativeModeInventoryScreen.class)

@@ -1,8 +1,5 @@
 package com.redcraft86.redpackutils.events;
 
-import java.util.Optional;
-import com.mojang.logging.LogUtils;
-import com.mojang.datafixers.util.Pair;
 import com.redcraft86.redpackutils.ModClass;
 import com.redcraft86.redpackutils.config.CommonConfig;
 import net.minecraft.core.BlockPos;
@@ -16,9 +13,12 @@ import net.minecraft.tags.StructureTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.logging.LogUtils;
+import java.util.Optional;
 import org.slf4j.Logger;
 
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
