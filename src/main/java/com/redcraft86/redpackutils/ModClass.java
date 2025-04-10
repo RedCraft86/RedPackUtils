@@ -1,6 +1,5 @@
 package com.redcraft86.redpackutils;
 
-import com.redcraft86.redpackutils.events.EntityInteraction;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +20,8 @@ import com.redcraft86.redpackutils.config.ClientConfig;
 import com.redcraft86.redpackutils.config.CommonConfig;
 import com.redcraft86.redpackutils.registries.items.ItemRegistry;
 import com.redcraft86.redpackutils.registries.blocks.BlockRegistry;
+import com.redcraft86.redpackutils.events.EntityInteraction;
+import com.redcraft86.redpackutils.events.MobGriefing;
 import com.redcraft86.redpackutils.events.VillageSpawn;
 
 @Mod(ModClass.MOD_ID)
@@ -47,6 +48,7 @@ public class ModClass
     private void loadComplete(final FMLLoadCompleteEvent event)
     {
         MinecraftForge.EVENT_BUS.register(EntityInteraction.class);
+        MinecraftForge.EVENT_BUS.register(MobGriefing.class);
         MinecraftForge.EVENT_BUS.register(VillageSpawn.class);
     }
 
