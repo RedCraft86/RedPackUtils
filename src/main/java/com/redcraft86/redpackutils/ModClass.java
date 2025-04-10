@@ -1,5 +1,6 @@
 package com.redcraft86.redpackutils;
 
+import com.redcraft86.redpackutils.events.EntityInteraction;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.fml.common.Mod;
@@ -43,7 +44,9 @@ public class ModClass
         context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
     }
 
-    private void loadComplete(final FMLLoadCompleteEvent event) {
+    private void loadComplete(final FMLLoadCompleteEvent event)
+    {
+        MinecraftForge.EVENT_BUS.register(EntityInteraction.class);
         MinecraftForge.EVENT_BUS.register(VillageSpawn.class);
     }
 
