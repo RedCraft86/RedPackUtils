@@ -9,7 +9,7 @@ import com.redcraft86.redpackutils.util.ModUtils;
 
 public class EntityInteraction {
     @SubscribeEvent
-    public static void onVillagerClick(PlayerInteractEvent.EntityInteract e) {
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {
         if (e.getLevel().isClientSide()) {
             return;
         }
