@@ -37,19 +37,11 @@ public class ModClass
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
 
-        modEventBus.addListener(this::loadComplete);
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
         context.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
         context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
-    }
-
-    private void loadComplete(final FMLLoadCompleteEvent event)
-    {
-        MinecraftForge.EVENT_BUS.register(EntityInteraction.class);
-        MinecraftForge.EVENT_BUS.register(MobGriefing.class);
-        MinecraftForge.EVENT_BUS.register(VillageSpawn.class);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)

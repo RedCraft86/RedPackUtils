@@ -1,12 +1,15 @@
 package com.redcraft86.redpackutils.events;
 
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.item.trading.MerchantOffer;
 import com.redcraft86.redpackutils.config.CommonConfig;
 import com.redcraft86.redpackutils.util.ModUtils;
+import com.redcraft86.redpackutils.ModClass;
 
+@Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EntityInteraction {
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {

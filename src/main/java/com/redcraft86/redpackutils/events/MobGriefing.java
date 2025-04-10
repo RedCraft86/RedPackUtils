@@ -1,6 +1,8 @@
 package com.redcraft86.redpackutils.events;
 
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.EntityMobGriefingEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Ghast;
@@ -11,9 +13,10 @@ import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.projectile.WitherSkull;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraftforge.event.entity.EntityMobGriefingEvent;
 import com.redcraft86.redpackutils.config.CommonConfig;
+import com.redcraft86.redpackutils.ModClass;
 
+@Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class MobGriefing {
     @SubscribeEvent
     public static void onMobGriefing(EntityMobGriefingEvent e) {
