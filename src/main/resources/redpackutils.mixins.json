@@ -5,11 +5,13 @@
   "refmap": "redpackutils.refmap.json",
   "mixins": [
     "BotaniaSkyboxRendererMixin",
-    "CreativeInventoryScreenMixin"
+    "CreativeInventoryScreenMixin",
+    "EndDragonFightMixin"
   ],
   "client": [
     "BotaniaSkyboxRendererMixin",
-    "CreativeInventoryScreenMixin"
+    "CreativeInventoryScreenMixin",
+    "EndDragonFightMixin"
   ],
   "minVersion": "0.8"
 }
