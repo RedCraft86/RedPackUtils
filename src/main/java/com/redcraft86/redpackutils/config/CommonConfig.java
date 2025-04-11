@@ -16,6 +16,7 @@ public class CommonConfig
 {
     private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
     private static final ForgeConfigSpec.BooleanValue ALWAYS_DRAGON_EGG;
+    private static final ForgeConfigSpec.BooleanValue NO_TEMPT_COOLDOWN;
 
     private static final ForgeConfigSpec.BooleanValue ZOMBIE_NO_GRIEF;
     private static final ForgeConfigSpec.BooleanValue CREEPER_NO_GRIEF;
@@ -31,40 +32,43 @@ public class CommonConfig
     static {
         BUILDER.push("Entity Tweaks");
 
-        UNLIMITED_VILLAGER = BUILDER.comment("Makes Villager and Wandering Trader trades never lock up.")
+        UNLIMITED_VILLAGER = BUILDER.comment("Prevents Villagers and Wandering Traders from locking their trades when they run 'out of stock.'")
                 .define("unlimitedVillager", true);
 
-        ALWAYS_DRAGON_EGG = BUILDER.comment("Makes the Ender Dragon always spawn a Dragon Egg on the podium no matter the fight count.")
+        ALWAYS_DRAGON_EGG = BUILDER.comment("Ensures the Ender Dragon always drops a Dragon Egg on the exit portal, regardless of how many times it's been defeated.")
                 .define("alwaysDragonEgg", true);
+
+        NO_TEMPT_COOLDOWN = BUILDER.comment("Disables the cooldown period that prevents animals from being immediately re-attracted to food (tempting) items after losing interest.")
+                .define("noTemptCooldown", true);
 
         BUILDER.push("Mob Griefing");
 
-        ZOMBIE_NO_GRIEF = BUILDER.comment("Makes Zombies unable to break doors.")
+        ZOMBIE_NO_GRIEF = BUILDER.comment("Prevents Zombies from breaking down doors.")
                 .define("zombieNoGrief", true);
 
-        CREEPER_NO_GRIEF = BUILDER.comment("Makes Creepers unable to break blocks upon explosions.")
+        CREEPER_NO_GRIEF = BUILDER.comment("Stops Creepers from destroying blocks when they explode.")
                 .define("creeperNoGrief", true);
 
-        ENDERMAN_NO_GRIEF = BUILDER.comment("Makes Endermen unable to pick up blocks.")
+        ENDERMAN_NO_GRIEF = BUILDER.comment("Disables Endermen's ability to pick up blocks.")
                 .define("endermanNoGrief", true);
 
-        GHAST_NO_GRIEF = BUILDER.comment("Makes Ghast fireballs unable to break blocks via fireballs.")
+        GHAST_NO_GRIEF = BUILDER.comment("Prevents Ghast fireballs from destroying blocks. (As long as they remain alive before impact)")
                 .define("ghastNoGrief", true);
 
-        DRAGON_NO_GRIEF = BUILDER.comment("Makes the Ender Dragon unable to break blocks.")
+        DRAGON_NO_GRIEF = BUILDER.comment("Stops the Ender Dragon from breaking blocks during its flight.")
                 .define("dragonNoGrief", true);
 
-        WITHER_NO_GRIEF = BUILDER.comment("Makes the Wither unable to destroy blocks.")
+        WITHER_NO_GRIEF = BUILDER.comment("Disables the Wither's attacks from breaking blocks. (Flying skulls are affected only if the Wither is alive)")
                 .define("witherNoGrief", true);
 
         BUILDER.pop();
         BUILDER.pop();
         BUILDER.push("Spawn Tweaks");
 
-        SPAWN_IN_VILLAGE = BUILDER.comment("Have the player spawn at the nearest village within a 128 chunk radius.")
+        SPAWN_IN_VILLAGE = BUILDER.comment("Spawns the player in the nearest village within a 128-chunk radius.")
                 .define("spawnInVillage", true);
 
-        SPAWN_VILLAGE_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when locating the closest village to spawn in.")
+        SPAWN_VILLAGE_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid village spawn point.")
                 .defineListAllowEmpty("spawnVillageBlacklist", List.of("minecraft:village_snowy"),
                         obj -> obj instanceof final String name && ResourceLocation.isValidResourceLocation(name));
 
@@ -74,6 +78,7 @@ public class CommonConfig
 
     public static boolean unlimitedVillager = true;
     public static boolean alwaysDragonEgg = true;
+    public static boolean noTemptCooldown = true;
 
     public static boolean zombieNoGrief = true;
     public static boolean creeperNoGrief = true;
@@ -91,6 +96,7 @@ public class CommonConfig
         if (event.getConfig().getSpec() == SPEC) {
             unlimitedVillager = UNLIMITED_VILLAGER.get();
             alwaysDragonEgg = ALWAYS_DRAGON_EGG.get();
+            noTemptCooldown = NO_TEMPT_COOLDOWN.get();
 
             zombieNoGrief = ZOMBIE_NO_GRIEF.get();
             creeperNoGrief = CREEPER_NO_GRIEF.get();

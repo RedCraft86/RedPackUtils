@@ -16,10 +16,10 @@ public class ClientConfig
     static {
         //BUILDER.push("Tweaks");
 
-        DISABLE_CREATIVE_TAB_TIPS = BUILDER.comment("Disable the Creative Tab tooltips on the creative inventory like \"Functional Blocks,\" \"Natural Blocks,\" etc")
+        DISABLE_CREATIVE_TAB_TIPS = BUILDER.comment("Disables the tooltip labels on Creative Mode tabs such as \"Functional Blocks,\" \"Natural Blocks,\" etc.")
                 .define("disableCreativeTabTips", true);
 
-        DISABLE_GOG_STARS = BUILDER.comment("Disable Botania's Garden of Glass skybox from changing the stars")
+        DISABLE_GOG_STARS = BUILDER.comment("Prevents Botania's Garden of Glass skybox from modifying the stars.")
                 .define("disableGardenOfGlassStars", true);
 
         //BUILDER.pop();
