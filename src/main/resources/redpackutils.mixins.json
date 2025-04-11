@@ -6,12 +6,14 @@
   "mixins": [
     "BotaniaSkyboxRendererMixin",
     "CreativeInventoryScreenMixin",
-    "EndDragonFightMixin"
+    "EndDragonFightMixin",
+    "TemptGoalMixin"
   ],
   "client": [
     "BotaniaSkyboxRendererMixin",
     "CreativeInventoryScreenMixin",
-    "EndDragonFightMixin"
+    "EndDragonFightMixin",
+    "TemptGoalMixin"
   ],
   "minVersion": "0.8"
 }
