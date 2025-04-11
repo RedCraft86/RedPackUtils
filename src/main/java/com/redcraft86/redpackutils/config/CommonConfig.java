@@ -25,8 +25,8 @@ public class CommonConfig
     private static final ForgeConfigSpec.BooleanValue DRAGON_NO_GRIEF;
     private static final ForgeConfigSpec.BooleanValue WITHER_NO_GRIEF;
 
-    private static final ForgeConfigSpec.BooleanValue SPAWN_IN_VILLAGE;
-    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> SPAWN_VILLAGE_BLACKLIST;
+    private static final ForgeConfigSpec.ConfigValue<? extends String> SPAWN_STRUCTURE;
+    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> SPAWN_STRUCTURE_BLACKLIST;
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     static {
@@ -65,11 +65,11 @@ public class CommonConfig
         BUILDER.pop();
         BUILDER.push("Spawn Tweaks");
 
-        SPAWN_IN_VILLAGE = BUILDER.comment("Spawns the player in the nearest village within a 128-chunk radius.")
-                .define("spawnInVillage", true);
+        SPAWN_STRUCTURE = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (ID or Tag, leave empty to disable)")
+                .define("spawnStructure", "#minecraft:village");
 
-        SPAWN_VILLAGE_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid village spawn point.")
-                .defineListAllowEmpty("spawnVillageBlacklist", List.of("minecraft:village_snowy"),
+        SPAWN_STRUCTURE_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid structure spawn point. (Only used when spawnStructure is a Tag)")
+                .defineListAllowEmpty("spawnStructureBlacklist", List.of("minecraft:village_snowy"),
                         obj -> obj instanceof final String name && ResourceLocation.isValidResourceLocation(name));
 
         BUILDER.pop();
@@ -87,8 +87,8 @@ public class CommonConfig
     public static boolean dragonNoGrief = true;
     public static boolean witherNoGrief = true;
 
-    public static boolean spawnInVillage = true;
-    public static Set<ResourceLocation> spawnVillageBlacklist = new HashSet<>();
+    public static String spawnStructure = "";
+    public static Set<ResourceLocation> spawnStructureBlacklist = new HashSet<>();
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
@@ -105,9 +105,9 @@ public class CommonConfig
             dragonNoGrief = DRAGON_NO_GRIEF.get();
             witherNoGrief = WITHER_NO_GRIEF.get();
 
-            spawnInVillage = SPAWN_IN_VILLAGE.get();
-            if (spawnInVillage) {
-                spawnVillageBlacklist = SPAWN_VILLAGE_BLACKLIST.get().stream()
+            spawnStructure = SPAWN_STRUCTURE.get();
+            if (spawnStructure.isEmpty()) {
+                spawnStructureBlacklist = SPAWN_STRUCTURE_BLACKLIST.get().stream()
                         .map(Object::toString)
                         .map(ResourceLocation::new)
                         .collect(Collectors.toSet());
