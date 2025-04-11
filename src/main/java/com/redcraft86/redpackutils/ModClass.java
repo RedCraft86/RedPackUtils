@@ -21,8 +21,7 @@ import com.redcraft86.redpackutils.registries.items.ItemRegistry;
 import com.redcraft86.redpackutils.registries.blocks.BlockRegistry;
 
 @Mod(ModClass.MOD_ID)
-public class ModClass
-{
+public class ModClass {
     public static final String MOD_ID = "redpackutils";
     private static final Logger LOGGER = LogUtils.getLogger();
 
