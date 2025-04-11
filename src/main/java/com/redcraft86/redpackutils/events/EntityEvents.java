@@ -31,9 +31,6 @@ public class EntityEvents {
         if (CommonConfig.unlimitedVillager && e.getTarget() instanceof AbstractVillager villager) {
             for (MerchantOffer offer : villager.getOffers()) {
                 offer.resetUses();
-                // We need to do some funky stuff to access them private content
-                ModUtils.setPrivateField(offer, "demand", 0);
-                ModUtils.setPrivateField(offer, "maxUses", Integer.MAX_VALUE);
             }
         }
     }
