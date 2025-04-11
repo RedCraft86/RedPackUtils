@@ -7,12 +7,14 @@
     "BotaniaSkyboxRendererMixin",
     "CreativeInventoryScreenMixin",
     "EndDragonFightMixin",
+    "MerchantOfferMixin",
     "TemptGoalMixin"
   ],
   "client": [
     "BotaniaSkyboxRendererMixin",
     "CreativeInventoryScreenMixin",
     "EndDragonFightMixin",
+    "MerchantOfferMixin",
     "TemptGoalMixin"
   ],
   "minVersion": "0.8"

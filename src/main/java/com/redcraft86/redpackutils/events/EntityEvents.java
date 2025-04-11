@@ -28,6 +28,8 @@ public class EntityEvents {
             return;
         }
 
+        // Mostly just for already-traded-with villagers
+        // For more info, look at mixin/MerchantOfferMixin.java
         if (CommonConfig.unlimitedVillager && e.getTarget() instanceof AbstractVillager villager) {
             for (MerchantOffer offer : villager.getOffers()) {
                 offer.resetUses();
