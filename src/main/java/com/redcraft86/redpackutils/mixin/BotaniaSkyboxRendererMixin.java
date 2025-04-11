@@ -12,8 +12,7 @@ import com.redcraft86.redpackutils.config.ClientConfig;
 
 @Mixin(value = SkyblockSkyRenderer.class, remap = false)
 public class BotaniaSkyboxRendererMixin {
-    // Botania's Garden of Glass skybox makes the stars really bright.
-    // So we hijack botania's method that does that and stop it from doing anything.
+    // We need this because Botania's Garden of Glass skybox makes the stars really bright. (and I prefer the skybox without that)
     @Inject(method = "renderStars", at = @At("HEAD"), cancellable = true, require = 0)
     private static void StopRenderStars(VertexBuffer starVBO, PoseStack ms, Matrix4f projMat,
                                         float partialTicks, Runnable resetFog, CallbackInfo ci) {

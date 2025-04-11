@@ -11,10 +11,12 @@ import com.redcraft86.redpackutils.config.ClientConfig;
 @Mixin(CreativeModeInventoryScreen.class)
 public class CreativeInventoryScreenMixin {
 
-    // The creative inventory displays a tooltip on items stating the creative tab said item originates from
-    // This is what handles things such as "Functional Blocks" or "Redstone Blocks" on the tooltips
-    // However, it also causes issues with mods that add mod name tooltips. Since modded items exist under
-    // a tab with the mod name, if there's a mod that displays mod name tooltips, the mod name can get stacked twice
+    // Mainly for creative mode but we need this if there's a mod that adds a mod name tooltip to the items.
+    // Say there's a mod called 'RandomItems' and it adds a creative mode tab with the same name.
+    // If you put any of those items into your creative inventory, the creative tab name (RandomItems) will show up.
+    // If there's a mod that adds mod name tool tips, which is necessary for things like JEI in survival,
+    // That will stack with the tab name. So you end up with the mod name displayed twice.
+    // That is why this mixin exist.
     @Redirect(method = "getTooltipFromContainerItem", at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z"), require = 0)
     private boolean redirectHasNext(Iterator<CreativeModeTab> iterator) {
         return !ClientConfig.disableCreativeTabTips && iterator.hasNext();

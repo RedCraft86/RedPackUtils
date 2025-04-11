@@ -16,9 +16,10 @@ public class EndDragonFightMixin {
     @Shadow
     private boolean previouslyKilled;
 
+    // Always make sure a Dragon Egg will spawn on the podium after a
+    // fight with the Ender Dragon even if it is no longer the first fight
     @Inject(method = "setDragonKilled", at = @At("HEAD"), require = 0)
     private void alwaysSpawnDragonEgg(EnderDragon dragon, CallbackInfo ci) {
-        // Forcefully set previouslyKilled to false so that the dragon egg is always spawned
         if (CommonConfig.alwaysDragonEgg) {
             previouslyKilled = false;
         }
