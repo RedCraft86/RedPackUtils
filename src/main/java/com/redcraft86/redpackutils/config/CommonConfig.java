@@ -38,7 +38,7 @@ public class CommonConfig
         ALWAYS_DRAGON_EGG = BUILDER.comment("Ensures the Ender Dragon always drops a Dragon Egg on the exit portal, regardless of how many times it's been defeated.")
                 .define("alwaysDragonEgg", true);
 
-        NO_TEMPT_COOLDOWN = BUILDER.comment("Disables the cooldown period that prevents animals from being immediately re-attracted to food (tempting) items after losing interest.")
+        NO_TEMPT_COOLDOWN = BUILDER.comment("Disables the cooldown period that prevents animals from being immediately re-attracted to tempting items (like food) after losing interest.")
                 .define("noTemptCooldown", true);
 
         BUILDER.push("Mob Griefing");

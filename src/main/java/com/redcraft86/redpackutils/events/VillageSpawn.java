@@ -25,6 +25,9 @@ import org.slf4j.Logger;
 public class VillageSpawn {
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    // Why do we just 'spawn' out of the earth like some kind of dirt-dwelling hermit?
+    // Why weren't we already part of a village or some civilization like a normal person?
+    // No more questions — this code spawns you in a village. You're welcome.
     @SubscribeEvent(receiveCanceled = true)
     public static void onWorldCreate(LevelEvent.CreateSpawnPosition e) {
         if (!CommonConfig.spawnInVillage) {
@@ -75,6 +78,7 @@ public class VillageSpawn {
             }
 
             try {
+                // This looks REALLY EXPENSIVE to run, so I sincerely hope we find one quick.
                 Pair<BlockPos, Holder<Structure>> result = level.getChunkSource().getGenerator().findNearestMapStructure(
                         level, HolderSet.direct(holder), spawnpoint, 128, false);
                 if (result != null) {
