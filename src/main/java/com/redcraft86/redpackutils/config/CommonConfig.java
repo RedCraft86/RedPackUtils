@@ -65,7 +65,7 @@ public class CommonConfig
         BUILDER.pop();
         BUILDER.push("Spawn Tweaks");
 
-        SPAWN_STRUCTURE = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (ID or Tag, leave empty to disable)")
+        SPAWN_STRUCTURE = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (a single ID or a Tag, leave empty to disable)")
                 .define("spawnStructure", "#minecraft:village");
 
         SPAWN_STRUCTURE_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid structure spawn point. (Only used when spawnStructure is a Tag)")
