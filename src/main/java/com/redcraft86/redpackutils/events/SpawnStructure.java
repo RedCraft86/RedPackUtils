@@ -117,7 +117,8 @@ public class SpawnStructure {
             Pair<BlockPos, Holder<Structure>> result = level.getChunkSource().getGenerator().findNearestMapStructure(
                     level, HolderSet.direct(holder), BlockPos.ZERO, 128, false);
             if (result != null) {
-                LOGGER.info("[RedPackUtils: Spawn Structure] Structure '{}' found at {}", id, result.getFirst().toString());
+                BlockPos Pos = result.getFirst();
+                LOGGER.info("[RedPackUtils: Spawn Structure] Structure '{}' found at {}, {}", id, Pos.getX(), Pos.getZ());
                 return result;
             }
 
