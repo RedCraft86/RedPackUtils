@@ -69,7 +69,7 @@ public class SpawnStructure {
             return false;
         } else {
             level.setDefaultSpawnPos(result.getFirst(), 1.0f);
-            LOGGER.info("[RedPackUtils: Spawn Structure] Structure found and Spawn Point set! Continuing world generation.");
+            LOGGER.info("[RedPackUtils: Spawn Structure] Spawn Point set! Continuing world generation.");
             return true;
         }
     }
