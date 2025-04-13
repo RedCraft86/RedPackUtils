@@ -29,8 +29,11 @@ public class SpawnStructure {
     @SubscribeEvent(receiveCanceled = true)
     public static void onWorldCreate(LevelEvent.CreateSpawnPosition e) {
         var structure = CommonConfig.spawnStructure.trim();
-        if (!structure.contains(":")) {
-            LOGGER.error("[RedPackUtils: Structure Spawn Point] Feature is disabled or ID/Tag is invalid, spawning in normally...");
+        if (structure.isEmpty()) {
+            LOGGER.info("[RedPackUtils: Structure Spawn Point] Feature is disabled, spawning in normally...");
+            return;
+        } else if (!structure.contains(":")) {
+            LOGGER.error("[RedPackUtils: Structure Spawn Point] ID/Tag is invalid, spawning in normally...");
             return;
         }
 
