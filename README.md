@@ -1,1 +1,1 @@
-This is a mod for my person modpack
+This is a mod for my personal modpack

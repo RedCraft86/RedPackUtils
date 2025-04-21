@@ -13,8 +13,8 @@ logoFile="logo.png"
 #credits="" #optional
 authors="${mod_authors}"
 #updateJSONURL=""
-
 description='''${mod_description}'''
+
 [[dependencies.${mod_id}]]
     modId="forge"
     mandatory=true
