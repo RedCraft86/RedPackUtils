@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped", 
+  "category": "misc",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "tag": "coralblocks:acan_corals"
+    }
+  },
+  "result": {
+    "item": "upgrade_aquatic:acan_coral_block"
+  }
+}
