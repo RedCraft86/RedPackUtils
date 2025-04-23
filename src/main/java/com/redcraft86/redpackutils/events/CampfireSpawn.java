@@ -2,6 +2,7 @@ package com.redcraft86.redpackutils.events;
 
 import java.util.Collections;
 import javax.annotation.Nonnull;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -10,12 +11,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -23,10 +26,18 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import com.redcraft86.redpackutils.ModClass;
 import com.redcraft86.redpackutils.config.CommonConfig;
+import com.redcraft86.redpackutils.util.ModUtils;
 
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CampfireSpawn {
     private static final String TAG_SPAWN_DATA = "CampfireSpawnData";
+
+    @SubscribeEvent
+    public static void onCampfireTooltip(ItemTooltipEvent event) {
+        if (event.getItemStack().getItem() == Items.CAMPFIRE && CommonConfig.campfireSpawnPoint) {
+            event.getToolTip().add(ModUtils.makeTooltip("campfire_spawnpoint").withStyle(ChatFormatting.GRAY));
+        }
+    }
 
     @SubscribeEvent
     public static void onCampfireInteract(PlayerInteractEvent.RightClickBlock e) {
@@ -35,9 +46,13 @@ public class CampfireSpawn {
             Level level = e.getLevel();
             BlockPos pos = e.getPos();
             BlockState state = level.getBlockState(pos);
-            if (player.isShiftKeyDown() && state.is(Blocks.CAMPFIRE) && state.getValue(BlockStateProperties.LIT)) {
-                setSpawnData(player, formatSpawnData(level, pos));
-                player.displayClientMessage(Component.literal("Temporary spawnpoint set!"), true);
+            if (player.isShiftKeyDown() && state.is(Blocks.CAMPFIRE)) {
+                if (state.getValue(BlockStateProperties.LIT)) {
+                    setSpawnData(player, formatSpawnData(level, pos));
+                    player.displayClientMessage(Component.literal("Temporary spawnpoint set!"), true);
+                } else {
+                    player.displayClientMessage(Component.literal("Campfire must be lit to set a temporary spawnpoint!"), true);
+                }
             }
         }
     }
