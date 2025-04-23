@@ -10,6 +10,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -111,6 +113,7 @@ public class CampfireSpawn {
                 BlockState state = campfireLevel.getBlockState(campfirePos);
                 if (state.is(Blocks.CAMPFIRE) && state.getValue(BlockStateProperties.LIT)) {
                     BlockPos above = campfirePos.above();
+                    player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 200, 0, false ,false, true));
                     player.teleportTo(campfireLevel, above.getX() + 0.5, above.getY(), above.getZ() + 0.5, Collections.emptySet(), player.getYRot(), player.getXRot());
                     player.displayClientMessage(Component.literal("Respawned at temporary spawnpoint!"), true);
                 } else {
