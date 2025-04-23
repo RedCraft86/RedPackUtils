@@ -14,6 +14,10 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonConfig
 {
+    private static final ForgeConfigSpec.BooleanValue CAMPFIRE_SPAWN_POINT;
+    private static final ForgeConfigSpec.ConfigValue<? extends String> SPAWN_STRUCTURE;
+    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> SPAWN_STRUCTURE_BLACKLIST;
+
     private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
     private static final ForgeConfigSpec.BooleanValue ALWAYS_DRAGON_EGG;
     private static final ForgeConfigSpec.BooleanValue NO_TEMPT_COOLDOWN;
@@ -25,12 +29,23 @@ public class CommonConfig
     private static final ForgeConfigSpec.BooleanValue DRAGON_NO_GRIEF;
     private static final ForgeConfigSpec.BooleanValue WITHER_NO_GRIEF;
 
-    private static final ForgeConfigSpec.ConfigValue<? extends String> SPAWN_STRUCTURE;
-    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> SPAWN_STRUCTURE_BLACKLIST;
-
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+
     static {
-        BUILDER.push("Entity Tweaks");
+        BUILDER.push("Spawn Mechanics");
+
+        CAMPFIRE_SPAWN_POINT = BUILDER.comment("Lets the player use lit campfires as a temporary spawnpoint.")
+                .define("campfireSpawnPoint", true);
+
+        SPAWN_STRUCTURE = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (a single ID or a Tag, leave empty to disable)")
+                .define("spawnStructure", "#minecraft:village");
+
+        SPAWN_STRUCTURE_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid structure spawn point. (Only used when spawnStructure is a Tag)")
+                .defineListAllowEmpty("spawnStructureBlacklist", List.of("minecraft:village_snowy"),
+                        obj -> obj instanceof final String name && ResourceLocation.isValidResourceLocation(name));
+
+        BUILDER.pop();
+        BUILDER.push("Mob Tweaks");
 
         UNLIMITED_VILLAGER = BUILDER.comment("Prevents Villagers and Wandering Traders from locking their trades when they run 'out of stock.'")
                 .define("unlimitedVillager", true);
@@ -63,19 +78,10 @@ public class CommonConfig
 
         BUILDER.pop();
         BUILDER.pop();
-        BUILDER.push("Spawn Tweaks");
-
-        SPAWN_STRUCTURE = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (a single ID or a Tag, leave empty to disable)")
-                .define("spawnStructure", "#minecraft:village");
-
-        SPAWN_STRUCTURE_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid structure spawn point. (Only used when spawnStructure is a Tag)")
-                .defineListAllowEmpty("spawnStructureBlacklist", List.of("minecraft:village_snowy"),
-                        obj -> obj instanceof final String name && ResourceLocation.isValidResourceLocation(name));
-
-        BUILDER.pop();
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
+    public static boolean campfireSpawnPoint = true;
     public static boolean unlimitedVillager = true;
     public static boolean alwaysDragonEgg = true;
     public static boolean noTemptCooldown = true;
@@ -87,13 +93,22 @@ public class CommonConfig
     public static boolean dragonNoGrief = true;
     public static boolean witherNoGrief = true;
 
-    public static String spawnStructure = "";
+    public static String spawnStructure = "#minecraft:village";
     public static Set<ResourceLocation> spawnStructureBlacklist = new HashSet<>();
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
     {
         if (event.getConfig().getSpec() == SPEC) {
+            campfireSpawnPoint = CAMPFIRE_SPAWN_POINT.get();
+            spawnStructure = SPAWN_STRUCTURE.get();
+            if (spawnStructure.isEmpty()) {
+                spawnStructureBlacklist = SPAWN_STRUCTURE_BLACKLIST.get().stream()
+                        .map(Object::toString)
+                        .map(ResourceLocation::new)
+                        .collect(Collectors.toSet());
+            }
+
             unlimitedVillager = UNLIMITED_VILLAGER.get();
             alwaysDragonEgg = ALWAYS_DRAGON_EGG.get();
             noTemptCooldown = NO_TEMPT_COOLDOWN.get();
@@ -104,14 +119,6 @@ public class CommonConfig
             ghastNoGrief = GHAST_NO_GRIEF.get();
             dragonNoGrief = DRAGON_NO_GRIEF.get();
             witherNoGrief = WITHER_NO_GRIEF.get();
-
-            spawnStructure = SPAWN_STRUCTURE.get();
-            if (spawnStructure.isEmpty()) {
-                spawnStructureBlacklist = SPAWN_STRUCTURE_BLACKLIST.get().stream()
-                        .map(Object::toString)
-                        .map(ResourceLocation::new)
-                        .collect(Collectors.toSet());
-            }
         }
     }
 }
