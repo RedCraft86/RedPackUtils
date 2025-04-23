@@ -1,13 +1,6 @@
 {
   "replace": false,
   "values": [
-    "redpackutils:rainbow_beacon",
-    "minecraft:reinforced_deepslate",
-    "minecraft:glowstone",
-    "minecraft:sea_lantern",
-    "minecraft:redstone_lamp",
-    "minecraft:beacon",
-    "#forge:glass_panes",
-    "#forge:glass"
+    "redpackutils:rainbow_beacon"
   ]
 }
