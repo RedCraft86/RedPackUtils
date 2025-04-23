@@ -24,9 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 public class EntityEvents {
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {
-        if (e.getLevel().isClientSide()) {
-            return;
-        }
+        if (e.getLevel().isClientSide()) return;
 
         // Mostly just for already-traded-with villagers
         // For more info, look at mixin/MerchantOfferMixin.java
