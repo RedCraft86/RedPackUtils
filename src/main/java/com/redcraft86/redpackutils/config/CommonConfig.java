@@ -114,12 +114,8 @@ public class CommonConfig
 
             campfireSpawnPoint = CAMPFIRE_SPAWN_POINT.get();
             spawnStructure = SPAWN_STRUCTURE.get();
-            if (spawnStructure.isEmpty()) {
-                spawnStructureBlacklist = SPAWN_STRUCTURE_BLACKLIST.get().stream()
-                        .map(Object::toString)
-                        .map(ResourceLocation::new)
-                        .collect(Collectors.toSet());
-            }
+            spawnStructureBlacklist = SPAWN_STRUCTURE_BLACKLIST.get().stream()
+                    .map(Object::toString).map(ResourceLocation::new).collect(Collectors.toSet());
         }
     }
 }
