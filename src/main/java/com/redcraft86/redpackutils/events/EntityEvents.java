@@ -2,7 +2,7 @@ package com.redcraft86.redpackutils.events;
 
 import com.redcraft86.redpackutils.ModClass;
 import com.redcraft86.redpackutils.config.CommonConfig;
-import com.redcraft86.redpackutils.util.ModUtils;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 public class EntityEvents {
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {
-        if (e.getLevel().isClientSide()) return;
+        if (e.getLevel().isClientSide() && e.getHand() != InteractionHand.MAIN_HAND) return;
 
         // Mostly just for already-traded-with villagers
         // For more info, look at mixin/MerchantOfferMixin.java
