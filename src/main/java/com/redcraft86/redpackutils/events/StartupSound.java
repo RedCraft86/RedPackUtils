@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class ScreenEvents {
+public class StartupSound {
     private static boolean hasPlayedStartup = false;
     private static final Random RANDOM = new Random();
     private static final Logger LOGGER = LogUtils.getLogger();
