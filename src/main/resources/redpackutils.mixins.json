@@ -5,13 +5,11 @@
   "refmap": "redpackutils.refmap.json",
   "plugin": "com.redcraft86.redpackutils.mixin.MixinPlugin",
   "mixins": [
+    "BotaniaSkyboxRendererMixin",
+    "CreativeInventoryScreenMixin",
     "EndDragonFightMixin",
     "MerchantOfferMixin",
     "TemptGoalMixin"
-  ],
-  "client": [
-    "BotaniaSkyboxRendererMixin",
-    "CreativeInventoryScreenMixin"
   ],
   "minVersion": "0.8"
 }

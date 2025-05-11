@@ -30,7 +30,7 @@ public class ClientConfig
         DISABLE_CREATIVE_TAB_TIPS = BUILDER.comment("Disables the tooltip labels on Creative Mode tabs such as \"Functional Blocks,\" \"Natural Blocks,\" etc.")
                 .define("disableCreativeTabTips", true);
 
-        DISABLE_GOG_STARS = BUILDER.comment("Prevents Botania's Garden of Glass skybox from modifying the stars.")
+        DISABLE_GOG_STARS = BUILDER.comment("Prevents Botania's Garden of Glass skybox from modifying the stars.\nWon't do anything without Botania installed.")
                 .define("disableGardenOfGlassStars", true);
 
         //BUILDER.pop();

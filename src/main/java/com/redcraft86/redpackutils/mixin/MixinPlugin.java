@@ -1,27 +1,23 @@
 package com.redcraft86.redpackutils.mixin;
 
-import net.minecraftforge.fml.ModList;
-import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+import net.minecraftforge.fml.loading.FMLLoader;
+import org.objectweb.asm.tree.ClassNode;
 import java.util.List;
 import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
-    private boolean isBotaniaLoaded = false;
-
-    @Override
-    public void onLoad(String mixinPackage) {
-        isBotaniaLoaded = ModList.get().isLoaded("botania");
-    }
-
     @Override
     public boolean shouldApplyMixin(String targetClass, String mixinClass) {
-        if (mixinClass.contains("BotaniaSkyboxRendererMixin")) {
-            return isBotaniaLoaded;
+        if (mixinClass.endsWith("BotaniaSkyboxRendererMixin")) {
+            return isModIncluded("botania");
         }
         return true;
     }
+
+    @Override
+    public void onLoad(String mixinPackage) {}
 
     @Override
     public String getRefMapperConfig() { return null; }
@@ -37,4 +33,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void postApply(String s, ClassNode classNode, String s1, IMixinInfo iMixinInfo) {}
+
+    private static boolean isModIncluded(String modID) {
+        return FMLLoader.getLoadingModList().getModFileById(modID) != null;
+    }
 }
