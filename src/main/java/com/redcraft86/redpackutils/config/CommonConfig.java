@@ -1,11 +1,14 @@
 package com.redcraft86.redpackutils.config;
 
 import com.redcraft86.redpackutils.ModClass;
+import com.redcraft86.redpackutils.util.BonfireEffect;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +29,10 @@ public class CommonConfig
     private static final ForgeConfigSpec.BooleanValue DRAGON_NO_GRIEF;
     private static final ForgeConfigSpec.BooleanValue WITHER_NO_GRIEF;
 
-    private static final ForgeConfigSpec.BooleanValue CAMPFIRE_SPAWN_POINT;
+    private static final ForgeConfigSpec.BooleanValue BONFIRE_SOULFIRE;
+    private static final ForgeConfigSpec.BooleanValue BONFIRE_SPAWNPOINT;
+    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> BONFIRE_BLESSINGS;
+
     private static final ForgeConfigSpec.ConfigValue<? extends String> SPAWN_STRUCTURE;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> SPAWN_STRUCTURE_BLACKLIST;
 
@@ -50,7 +56,7 @@ public class CommonConfig
                 .define("zombieNoGrief", true);
 
         CREEPER_NO_GRIEF = BUILDER.comment("Stops Creepers from destroying blocks when they explode.")
-                .define("creeperNoGrief", true);
+                .define("creeperNoGrief", false);
 
         ENDERMAN_NO_GRIEF = BUILDER.comment("Disables Endermen's ability to pick up blocks.")
                 .define("endermanNoGrief", true);
@@ -59,17 +65,29 @@ public class CommonConfig
                 .define("ghastNoGrief", true);
 
         DRAGON_NO_GRIEF = BUILDER.comment("Stops the Ender Dragon from breaking blocks during its flight.")
-                .define("dragonNoGrief", true);
+                .define("dragonNoGrief", false);
 
         WITHER_NO_GRIEF = BUILDER.comment("Disables the Wither's attacks from breaking blocks. (Flying skulls are affected only if the Wither is alive)")
-                .define("witherNoGrief", true);
+                .define("witherNoGrief", false);
 
         BUILDER.pop();
         BUILDER.pop();
-        BUILDER.push("Spawn Tweaks");
 
-        CAMPFIRE_SPAWN_POINT = BUILDER.comment("Lets the player use lit campfires as a temporary spawnpoint.")
-                .define("campfireSpawnPoint", true);
+        BUILDER.push("Bonfire System");
+
+        BONFIRE_SOULFIRE = BUILDER.comment("Use Soul Campfires instead of regular ones for the Bonfire System.")
+                .define("bonfireSoulfire", true);
+
+        BONFIRE_SPAWNPOINT = BUILDER.comment("Lets the player use bonfires as a temporary spawn point.")
+                .define("bonfireSpawnPoint", true);
+
+        BONFIRE_BLESSINGS = BUILDER.comment("Effects to give when obtaining blessings from a bonfires.\nLeave empty to disable. Format is: \"effect_id power ticks\"")
+                .defineListAllowEmpty("bonfireBlessings", List.of("minecraft:regeneration 2 6000", "minecraft:saturation 2 6000", "minecraft:resistance 2 6000", "minecraft:strength 2 6000"),
+                        obj -> obj instanceof final String name && ResourceLocation.isValidResourceLocation(name.split(" ", 3)[0]));
+
+        BUILDER.pop();
+
+        BUILDER.push("Structure Spawnpoint");
 
         SPAWN_STRUCTURE = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (a single ID or a Tag, leave empty to disable)")
                 .define("spawnStructure", "#minecraft:village");
@@ -93,7 +111,10 @@ public class CommonConfig
     public static boolean dragonNoGrief = true;
     public static boolean witherNoGrief = true;
 
-    public static boolean campfireSpawnPoint = true;
+    public static boolean bonfireSoulfire = true;
+    public static boolean bonfireSpawnPoint = true;
+    public static Set<BonfireEffect> bonfireEffects = Collections.emptySet();
+
     public static String spawnStructure = "#minecraft:village";
     public static Set<ResourceLocation> spawnStructureBlacklist = new HashSet<>();
 
@@ -112,7 +133,11 @@ public class CommonConfig
             dragonNoGrief = DRAGON_NO_GRIEF.get();
             witherNoGrief = WITHER_NO_GRIEF.get();
 
-            campfireSpawnPoint = CAMPFIRE_SPAWN_POINT.get();
+            bonfireSoulfire = BONFIRE_SOULFIRE.get();
+            bonfireSpawnPoint = BONFIRE_SPAWNPOINT.get();
+            bonfireEffects = BONFIRE_BLESSINGS.get().stream()
+                    .map(Object::toString).map(BonfireEffect::new).collect(Collectors.toSet());
+
             spawnStructure = SPAWN_STRUCTURE.get();
             spawnStructureBlacklist = SPAWN_STRUCTURE_BLACKLIST.get().stream()
                     .map(Object::toString).map(ResourceLocation::new).collect(Collectors.toSet());

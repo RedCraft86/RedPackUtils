@@ -1,5 +1,13 @@
 {
   "block.redpackutils.rainbow_beacon": "Rainbow Beacon",
   "tooltip.redpackutils.rainbow_beacon": "Makes beacon beams §cr§6a§ei§an§bbo§9w",
-  "tooltip.redpackutils.campfire_spawnpoint": "Shift + Right Click for a temporary spawn point"
+  "tooltip.redpackutils.bonfire.effects": "Right-click to obtain beneficial effects",
+  "tooltip.redpackutils.bonfire.spawnpoint": "Sneak + Right-click to set temporary spawn",
+
+  "message.redpackutils.bonfire.unlit": "Campfire must be Lit for Bonfire features!",
+  "message.redpackutils.bonfire.effects_applied": "Blessings Obtained!",
+  "message.redpackutils.bonfire.spawn_set": "Bonfire Spawn Point Set!",
+  "message.redpackutils.bonfire.spawn_removed": "Bonfire Spawn Point Removed!",
+  "message.redpackutils.bonfire.spawn_invalid": "Bonfire was Destroyed or Extinguished!",
+  "message.redpackutils.bonfire.respawned": "Respawned at Bonfire!"
 }
