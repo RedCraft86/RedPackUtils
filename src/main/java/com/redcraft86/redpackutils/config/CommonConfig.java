@@ -17,6 +17,7 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonConfig
 {
+    private static final ForgeConfigSpec.BooleanValue NO_BOAT_FALL_DMG;
 
     private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
     private static final ForgeConfigSpec.BooleanValue ALWAYS_DRAGON_EGG;
@@ -39,6 +40,12 @@ public class CommonConfig
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     static {
+        BUILDER.push("Tweaks");
+
+        NO_BOAT_FALL_DMG = BUILDER.comment("Stop boats from taking fall damage and breaking.")
+                .define("noBoatFallDmg", true);
+
+        BUILDER.pop();
         BUILDER.push("Mob Tweaks");
 
         UNLIMITED_VILLAGER = BUILDER.comment("Prevents Villagers and Wandering Traders from locking their trades when they run 'out of stock.'")
