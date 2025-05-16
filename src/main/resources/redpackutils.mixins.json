@@ -5,6 +5,7 @@
   "refmap": "redpackutils.refmap.json",
   "plugin": "com.redcraft86.redpackutils.mixin.MixinPlugin",
   "mixins": [
+    "BoatMixin",
     "BotaniaSkyboxRendererMixin",
     "CreativeInventoryScreenMixin",
     "EndDragonFightMixin",
