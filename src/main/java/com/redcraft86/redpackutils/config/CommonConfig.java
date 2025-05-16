@@ -43,13 +43,13 @@ public class CommonConfig
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     static {
-        BUILDER.push("Tweaks");
+        BUILDER.push("Misc Tweaks");
 
         INFINITE_ARROWS = BUILDER.comment("Makes infinity enchantment on arrows no longer require at least one arrow in inventory.")
-                .define("unlimitedVillager", true);
+                .define("infiniteArrows", true);
 
         NO_BOAT_FALL_DMG = BUILDER.comment("Stop boats from taking fall damage and breaking.")
-                .define("noBoatFallDmg", true);
+                .define("noBoatFallDamage", true);
 
         FIX_BUCKET_CRAFTING = BUILDER.comment("Fixes MC151457 where crafting recipes using bucketed items like Fish in a Bucket does not return the bucket.")
                 .define("fixBucketCrafting", true);
