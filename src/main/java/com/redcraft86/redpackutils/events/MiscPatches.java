@@ -33,7 +33,7 @@ public class MiscPatches {
 
         for (Item item : items) {
             // I think there's another mod that does this as well, I've seen it in logs of a mod applying it in some mod packs
-            // Just in case that mod is loaded together with this, we'll do a sanity check
+            // Just in case that mod is loaded together with this, we'll do a check
             if (!item.hasCraftingRemainingItem()) {
                 ((ItemAccessor)item).setCraftingRemainingItem(Items.BUCKET);
             }
