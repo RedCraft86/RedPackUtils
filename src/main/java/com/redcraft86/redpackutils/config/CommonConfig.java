@@ -107,6 +107,8 @@ public class CommonConfig
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
+    public static boolean noBoatFallDmg = true;
+
     public static boolean unlimitedVillager = true;
     public static boolean alwaysDragonEgg = true;
     public static boolean noTemptCooldown = true;
@@ -129,6 +131,8 @@ public class CommonConfig
     static void onLoad(final ModConfigEvent event)
     {
         if (event.getConfig().getSpec() == SPEC) {
+            noBoatFallDmg = NO_BOAT_FALL_DMG.get();
+
             unlimitedVillager = UNLIMITED_VILLAGER.get();
             alwaysDragonEgg = ALWAYS_DRAGON_EGG.get();
             noTemptCooldown = NO_TEMPT_COOLDOWN.get();
