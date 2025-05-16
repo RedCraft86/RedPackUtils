@@ -5,9 +5,11 @@
   "refmap": "redpackutils.refmap.json",
   "plugin": "com.redcraft86.redpackutils.mixin.MixinPlugin",
   "mixins": [
+    "accessor.ItemAccessor",
     "BoatMixin",
     "BotaniaSkyboxRendererMixin",
     "CreativeInventoryScreenMixin",
+    "EnchantmentMixin",
     "EndDragonFightMixin",
     "MerchantOfferMixin",
     "TemptGoalMixin"
