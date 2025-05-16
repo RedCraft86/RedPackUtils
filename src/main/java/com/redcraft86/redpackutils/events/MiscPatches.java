@@ -20,7 +20,8 @@ public class MiscPatches {
 
     private static void applyMC151457() {
         // Mojang literally forgetting to add .craftRemainder(BUCKET) to all of these
-        // They have like 3 item classes for bucket related things, why not just have them apply it by default
+        // They have like 3 item classes for bucket related things, why not just have a common abstract class
+        // that applies the remaining item by default
         Item[] items = {
                 Items.AXOLOTL_BUCKET,
                 Items.COD_BUCKET,
