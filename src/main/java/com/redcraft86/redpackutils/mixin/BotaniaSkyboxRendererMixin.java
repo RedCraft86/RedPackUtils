@@ -14,7 +14,7 @@ import com.redcraft86.redpackutils.config.ClientConfig;
 public class BotaniaSkyboxRendererMixin {
     // We need this because Botania's Garden of Glass skybox makes the stars really bright. (and I prefer the skybox without that)
     @Inject(method = "renderStars", at = @At("HEAD"), cancellable = true, require = 0)
-    private void stopRenderStars(VertexBuffer starVBO, PoseStack ms, Matrix4f projMat,
+    private static void stopRenderStars(VertexBuffer starVBO, PoseStack ms, Matrix4f projMat,
                                         float partialTicks, Runnable resetFog, CallbackInfo ci) {
         if (ClientConfig.disableGoGStars) {
             ci.cancel();
