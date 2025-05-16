@@ -17,7 +17,9 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonConfig
 {
+    private static final ForgeConfigSpec.BooleanValue INFINITE_ARROWS;
     private static final ForgeConfigSpec.BooleanValue NO_BOAT_FALL_DMG;
+    private static final ForgeConfigSpec.BooleanValue FIX_BUCKET_CRAFTING;
     private static final ForgeConfigSpec.BooleanValue COMBINE_ENCHANTS;
 
     private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
@@ -43,8 +45,14 @@ public class CommonConfig
     static {
         BUILDER.push("Tweaks");
 
+        INFINITE_ARROWS = BUILDER.comment("Makes infinity enchantment on arrows no longer require at least one arrow in inventory.")
+                .define("unlimitedVillager", true);
+
         NO_BOAT_FALL_DMG = BUILDER.comment("Stop boats from taking fall damage and breaking.")
                 .define("noBoatFallDmg", true);
+
+        FIX_BUCKET_CRAFTING = BUILDER.comment("Fixes MC151457 where crafting recipes using bucketed items like Fish in a Bucket does not return the bucket.")
+                .define("fixBucketCrafting", true);
 
         COMBINE_ENCHANTS = BUILDER.comment("Remove restrictions around combining enchantments.")
                 .define("combineAnyEnchant", true);
@@ -111,7 +119,9 @@ public class CommonConfig
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
+    public static boolean infiniteArrows = true;
     public static boolean noBoatFallDmg = true;
+    public static boolean fixBucketCrafting = true;
     public static boolean combineAnyEnchant = true;
 
     public static boolean unlimitedVillager = true;
@@ -136,7 +146,9 @@ public class CommonConfig
     static void onLoad(final ModConfigEvent event)
     {
         if (event.getConfig().getSpec() == SPEC) {
+            infiniteArrows = INFINITE_ARROWS.get();
             noBoatFallDmg = NO_BOAT_FALL_DMG.get();
+            fixBucketCrafting = FIX_BUCKET_CRAFTING.get();
             combineAnyEnchant = COMBINE_ENCHANTS.get();
 
             unlimitedVillager = UNLIMITED_VILLAGER.get();

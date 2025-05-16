@@ -14,6 +14,7 @@ import com.redcraft86.redpackutils.config.ClientConfig;
 import com.redcraft86.redpackutils.config.CommonConfig;
 import com.redcraft86.redpackutils.registries.items.ItemRegistry;
 import com.redcraft86.redpackutils.registries.blocks.BlockRegistry;
+import com.redcraft86.redpackutils.events.MiscPatches;
 
 @Mod(ModClass.MOD_ID)
 public class ModClass {
@@ -26,6 +27,7 @@ public class ModClass {
 
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
+        MiscPatches.applyManualPatches();
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
