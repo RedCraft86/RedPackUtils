@@ -18,6 +18,7 @@ import java.util.Set;
 public class CommonConfig
 {
     private static final ForgeConfigSpec.BooleanValue NO_BOAT_FALL_DMG;
+    private static final ForgeConfigSpec.BooleanValue COMBINE_ENCHANTS;
 
     private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
     private static final ForgeConfigSpec.BooleanValue ALWAYS_DRAGON_EGG;
@@ -44,6 +45,9 @@ public class CommonConfig
 
         NO_BOAT_FALL_DMG = BUILDER.comment("Stop boats from taking fall damage and breaking.")
                 .define("noBoatFallDmg", true);
+
+        COMBINE_ENCHANTS = BUILDER.comment("Remove restrictions around combining enchantments.")
+                .define("combineAnyEnchant", true);
 
         BUILDER.pop();
         BUILDER.push("Mob Tweaks");
@@ -108,6 +112,7 @@ public class CommonConfig
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static boolean noBoatFallDmg = true;
+    public static boolean combineAnyEnchant = true;
 
     public static boolean unlimitedVillager = true;
     public static boolean alwaysDragonEgg = true;
@@ -132,6 +137,7 @@ public class CommonConfig
     {
         if (event.getConfig().getSpec() == SPEC) {
             noBoatFallDmg = NO_BOAT_FALL_DMG.get();
+            combineAnyEnchant = COMBINE_ENCHANTS.get();
 
             unlimitedVillager = UNLIMITED_VILLAGER.get();
             alwaysDragonEgg = ALWAYS_DRAGON_EGG.get();
