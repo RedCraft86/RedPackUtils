@@ -20,7 +20,6 @@ public class CommonConfig
     private static final ForgeConfigSpec.BooleanValue INFINITE_ARROWS;
     private static final ForgeConfigSpec.BooleanValue NO_BOAT_FALL_DMG;
     private static final ForgeConfigSpec.BooleanValue FIX_BUCKET_CRAFTING;
-    private static final ForgeConfigSpec.BooleanValue COMBINE_ENCHANTS;
 
     private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
     private static final ForgeConfigSpec.BooleanValue ALWAYS_DRAGON_EGG;
@@ -53,9 +52,6 @@ public class CommonConfig
 
         FIX_BUCKET_CRAFTING = BUILDER.comment("Fixes MC151457 where crafting recipes using bucketed items like Fish in a Bucket does not return the bucket.")
                 .define("fixBucketCrafting", true);
-
-        COMBINE_ENCHANTS = BUILDER.comment("Remove restrictions around combining enchantments.")
-                .define("combineAnyEnchant", true);
 
         BUILDER.pop();
         BUILDER.push("Mob Tweaks");
@@ -105,8 +101,7 @@ public class CommonConfig
                         obj -> obj instanceof final String name && ResourceLocation.isValidResourceLocation(name.split(" ", 3)[0]));
 
         BUILDER.pop();
-
-        BUILDER.push("Structure Spawnpoint");
+        BUILDER.push("Structure Spawn");
 
         SPAWN_STRUCTURE = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (a single ID or a Tag, leave empty to disable)")
                 .define("spawnStructure", "#minecraft:village");
@@ -122,7 +117,6 @@ public class CommonConfig
     public static boolean infiniteArrows = true;
     public static boolean noBoatFallDmg = true;
     public static boolean fixBucketCrafting = true;
-    public static boolean combineAnyEnchant = true;
 
     public static boolean unlimitedVillager = true;
     public static boolean alwaysDragonEgg = true;
@@ -149,7 +143,6 @@ public class CommonConfig
             infiniteArrows = INFINITE_ARROWS.get();
             noBoatFallDmg = NO_BOAT_FALL_DMG.get();
             fixBucketCrafting = FIX_BUCKET_CRAFTING.get();
-            combineAnyEnchant = COMBINE_ENCHANTS.get();
 
             unlimitedVillager = UNLIMITED_VILLAGER.get();
             alwaysDragonEgg = ALWAYS_DRAGON_EGG.get();
