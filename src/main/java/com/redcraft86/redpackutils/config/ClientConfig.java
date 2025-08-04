@@ -30,7 +30,7 @@ public class ClientConfig {
 
         STARTUP_SOUNDS = BUILDER.comment("Picks a random sound from this list to play on startup.\nLeave empty to disable. Format is: \"sound_id volume\"")
             .defineListAllowEmpty("startupSounds", List.of("minecraft:entity.experience_orb.pickup 0.7", "minecraft:entity.player.levelup 0.3"),
-                obj -> obj instanceof String name && ResourceLocation.isValidResourceLocation(name.split(" ", 2)[0]));
+                obj -> obj instanceof String);
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
@@ -67,13 +67,11 @@ public class ClientConfig {
             }
 
             // Validate ResourceLocation
-            String[] id = parts[0].split(":", 2);
-            if (id.length != 2) {
-                LOGGER.error("[RedPackUtils: Startup Sound] Expects both namespace and path for ID: {}", entry);
-                continue;
-            }
-            ResourceLocation sound = ResourceLocation.tryBuild(id[0].trim(), id[1].trim());
-            if (sound == null) {
+            String id = parts[0].trim();
+            ResourceLocation sound = null;
+            if (ResourceLocation.isValidResourceLocation(id)) {
+                sound = ResourceLocation.parse(id);
+            } else {
                 LOGGER.error("[RedPackUtils: Startup Sound] Invalid Sound ID: {}", entry);
                 continue;
             }
