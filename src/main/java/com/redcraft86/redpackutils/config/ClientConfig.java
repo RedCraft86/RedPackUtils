@@ -16,7 +16,6 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import com.redcraft86.redpackutils.ModClass;
 
-
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -50,7 +49,12 @@ public class ClientConfig {
     }
 
     private static void processStartupSounds() {
-        startupSounds.clear();
+
+        // Only need this to process during startup.
+        // We don't really care if this needs updating after it's relevancy is gone.
+        if (!startupSounds.isEmpty()) {
+            return;
+        }
 
         List<? extends String> soundList = STARTUP_SOUNDS.get();
         for (String entry : soundList) {
