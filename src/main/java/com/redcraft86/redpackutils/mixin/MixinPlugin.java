@@ -1,12 +1,14 @@
 package com.redcraft86.redpackutils.mixin;
 
-import java.util.Set;
 import java.util.List;
-import org.objectweb.asm.tree.ClassNode;
+import java.util.Set;
 
 import net.minecraftforge.fml.loading.FMLLoader;
-import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+
+import org.objectweb.asm.tree.ClassNode;
+
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
+import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 public class MixinPlugin implements IMixinConfigPlugin {
     @Override
