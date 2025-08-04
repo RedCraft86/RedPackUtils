@@ -62,12 +62,16 @@ public class ClientConfig {
             // Expect format: "sound_id volume" -> then convert to [sound id, volume]
             String[] parts = entry.split(" ", 2);
             if (parts.length != 2){
-                LOGGER.warn("[RedPackUtils: Startup Sound] Invalid Entry: {}", entry);
+                LOGGER.error("[RedPackUtils: Startup Sound] Invalid Entry format: {}", entry);
                 continue;
             }
 
             // Validate ResourceLocation
             String[] id = parts[0].split(":", 2);
+            if (id.length != 2) {
+                LOGGER.error("[RedPackUtils: Startup Sound] Expects both namespace and path for ID: {}", entry);
+                continue;
+            }
             ResourceLocation sound = ResourceLocation.tryBuild(id[0].trim(), id[1].trim());
             if (sound == null) {
                 LOGGER.error("[RedPackUtils: Startup Sound] Invalid Sound ID: {}", entry);
