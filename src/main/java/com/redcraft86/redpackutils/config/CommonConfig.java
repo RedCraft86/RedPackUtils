@@ -1,22 +1,71 @@
 package com.redcraft86.redpackutils.config;
 
-import com.redcraft86.redpackutils.ModClass;
+import com.mojang.logging.LogUtils;
+import org.slf4j.Logger;
+
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
+import net.minecraft.resources.ResourceLocation;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
+import com.redcraft86.redpackutils.ModClass;
 
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonConfig {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
+    private static final ForgeConfigSpec.BooleanValue NO_BOAT_FALL_DMG;
+    private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
+    private static final ForgeConfigSpec.BooleanValue NO_TEMPT_COOLDOWN;
+    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> GRIEF_BLACKLIST;
+
+    private static final ForgeConfigSpec.ConfigValue<? extends String> SPAWN_STRUCTURE;
+    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> SPAWN_STRUCTURE_BLACKLIST;
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-//    static {
-//
-//
-//    }
+    static {
+        BUILDER.push("Tweaks");
+
+        NO_BOAT_FALL_DMG = BUILDER.comment("Stop boats from taking fall damage and breaking.")
+            .define("noBoatFallDamage", true);
+
+        UNLIMITED_VILLAGER = BUILDER.comment("Prevents Villagers and Wandering Traders from locking their trades when they run 'out of stock.'")
+            .define("unlimitedVillager", true);
+
+        NO_TEMPT_COOLDOWN = BUILDER.comment("Disables the cooldown period that prevents animals from being immediately re-attracted to tempting items (like food) after losing interest.")
+            .define("noTemptCooldown", true);
+
+        GRIEF_BLACKLIST = BUILDER.comment("List of entity IDs that cannot grief the world.")
+            .defineListAllowEmpty("griefBlacklist", List.of("minecraft:creeper", "minecraft:fireball", "minecraft:wither_skull"),
+                obj -> obj instanceof String);
+
+        BUILDER.pop();
+        BUILDER.push("Spawnpoint");
+
+        SPAWN_STRUCTURE = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (a single ID or a Tag, leave empty to disable)")
+            .define("spawnStructure", "#minecraft:village");
+
+        SPAWN_STRUCTURE_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid structure spawn point. (Only used when spawnStructure is a Tag)")
+            .defineListAllowEmpty("spawnStructureBlacklist", List.of("minecraft:village_snowy"),
+                obj -> obj instanceof String);
+
+        BUILDER.pop();
+    }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
+
+    public static boolean noBoatFallDmg = true;
+    public static boolean unlimitedVillager = true;
+    public static boolean noTemptCooldown = true;
+    public static Set<ResourceLocation> griefBlacklist = new HashSet<>();
+
+    public static String spawnStructure = "#minecraft:village";
+    public static Set<ResourceLocation> spawnStructureBlacklist = new HashSet<>();
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
@@ -25,6 +74,23 @@ public class CommonConfig {
             return;
         }
 
+        noBoatFallDmg = NO_BOAT_FALL_DMG.get();
+        unlimitedVillager = UNLIMITED_VILLAGER.get();
+        noTemptCooldown = NO_TEMPT_COOLDOWN.get();
+        processIdList(GRIEF_BLACKLIST.get(), griefBlacklist, "Grief Blacklist");
 
+        spawnStructure = SPAWN_STRUCTURE.get();
+        processIdList(SPAWN_STRUCTURE_BLACKLIST.get(), spawnStructureBlacklist, "Spawn Structure Blacklist");
+    }
+
+    private static void processIdList(List<? extends String> entries, Set<ResourceLocation> result, String logCategory) {
+        result.clear();
+        for (String entry : entries) {
+            if (ResourceLocation.isValidResourceLocation(entry)){
+                result.add(ResourceLocation.parse(entry));
+            } else {
+                LOGGER.error("[RedPackUtils: {}] Invalid ID: {}", logCategory, entry);
+            }
+        }
     }
 }
