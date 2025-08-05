@@ -14,7 +14,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import com.redcraft86.redpackutils.config.*;
 
-
 @Mod(ModClass.MOD_ID)
 public class ModClass {
     public static final String MOD_ID = "redpackutils";
