@@ -42,7 +42,7 @@ public class CommonConfig {
             .define("noTemptCooldown", true);
 
         GRIEF_BLACKLIST = BUILDER.comment("List of entity IDs that cannot grief the world.")
-            .defineListAllowEmpty("mobGriefBlacklist", List.of("minecraft:creeper", "minecraft:fireball", "minecraft:wither_skull"),
+            .defineListAllowEmpty("mobGriefBlacklist", List.of("minecraft:creeper", "minecraft:enderman", "minecraft:fireball", "minecraft:wither_skull"),
                 obj -> obj instanceof String);
 
         BUILDER.pop();
