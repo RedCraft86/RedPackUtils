@@ -20,21 +20,16 @@ import com.redcraft86.redpackutils.ModClass;
 public class ClientConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private static final ForgeConfigSpec.BooleanValue DISABLE_CREATIVE_TAB_TIPS;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> STARTUP_SOUNDS;
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     static {
-        DISABLE_CREATIVE_TAB_TIPS = BUILDER.comment("Disables the item tooltip labels in Creative Mode such as \"Functional Blocks,\" \"Natural Blocks,\" etc.")
-            .define("disableCreativeTabTips", true);
-
         STARTUP_SOUNDS = BUILDER.comment("Picks a random sound from this list to play on startup.\nLeave empty to disable. Format is: \"sound_id volume\"")
             .defineListAllowEmpty("startupSounds", List.of("minecraft:entity.experience_orb.pickup 0.7", "minecraft:entity.player.levelup 0.3"),
                 obj -> obj instanceof String);
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
-    public static boolean disableCreativeTabTips = true;
     public static Map<ResourceLocation, Float> startupSounds = new HashMap<>();
 
     @SubscribeEvent
@@ -45,7 +40,6 @@ public class ClientConfig {
         }
 
         processStartupSounds();
-        disableCreativeTabTips = DISABLE_CREATIVE_TAB_TIPS.get();
     }
 
     private static void processStartupSounds() {

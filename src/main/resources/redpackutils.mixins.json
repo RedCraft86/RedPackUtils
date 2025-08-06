@@ -6,7 +6,6 @@
   "plugin": "com.redcraft86.redpackutils.mixin.MixinPlugin",
   "mixins": [
     "BoatMixin",
-    "CreativeInventoryScreenMixin",
     "MerchantOfferMixin",
     "TemptGoalMixin"
   ],
