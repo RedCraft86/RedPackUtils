@@ -19,7 +19,7 @@ public class TemptGoalMixin {
     @Shadow
     private int calmDown;
 
-    @Inject(method = "stop()V", at = @At("TAIL"), require = 0)
+    @Inject(method = "stop", at = @At("TAIL"))
     public void resetTemptCooldown(CallbackInfo ci) {
         if (CommonConfig.noTemptCooldown) {
             calmDown = 0;
