@@ -21,6 +21,7 @@ public class CommonConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final ForgeConfigSpec.BooleanValue NO_POISON_REGEN;
+    private static final ForgeConfigSpec.BooleanValue NO_ATK_COOLDOWN;
     private static final ForgeConfigSpec.BooleanValue NO_BOAT_FALL_DMG;
     private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
     private static final ForgeConfigSpec.BooleanValue NO_TEMPT_COOLDOWN;
@@ -32,7 +33,10 @@ public class CommonConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     static {
         NO_POISON_REGEN = BUILDER.comment("Makes poison and regeneration cancel each other out.")
-                .define("noPoisonedRegen", true);
+            .define("noPoisonedRegen", true);
+
+        NO_ATK_COOLDOWN = BUILDER.comment("Removes the attack cooldown introduced in the 1.9 Combat Update.")
+            .define("noAtkCooldown", false);
 
         NO_BOAT_FALL_DMG = BUILDER.comment("Stop boats from taking fall damage and breaking.")
             .define("noBoatFallDamage", true);
@@ -61,6 +65,7 @@ public class CommonConfig {
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static boolean noPoisonRegen = true;
+    public static boolean noAtkCooldown = false;
     public static boolean noBoatFallDmg = true;
     public static boolean unlimitedVillager = true;
     public static boolean noTemptCooldown = true;
@@ -77,6 +82,7 @@ public class CommonConfig {
         }
 
         noPoisonRegen = NO_POISON_REGEN.get();
+        noAtkCooldown = NO_ATK_COOLDOWN.get();
         noBoatFallDmg = NO_BOAT_FALL_DMG.get();
         unlimitedVillager = UNLIMITED_VILLAGER.get();
         noTemptCooldown = NO_TEMPT_COOLDOWN.get();

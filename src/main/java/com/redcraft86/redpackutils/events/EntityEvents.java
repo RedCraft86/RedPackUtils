@@ -7,15 +7,17 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
 
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.EntityMobGriefingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -44,6 +46,17 @@ public class EntityEvents {
                 offer.resetUses();
                 offer.maxUses = Integer.MAX_VALUE;
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLivingDamage(LivingDamageEvent event) {
+        if (event.getEntity() == null || event.getSource() == null || event.getEntity().level().isClientSide()) {
+            return;
+        }
+
+        if (CommonConfig.noAtkCooldown && event.getSource().is(DamageTypes.PLAYER_ATTACK)) {
+            event.getEntity().invulnerableTime = 0;
         }
     }
 
