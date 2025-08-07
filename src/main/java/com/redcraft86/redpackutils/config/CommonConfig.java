@@ -20,6 +20,7 @@ import com.redcraft86.redpackutils.ModClass;
 public class CommonConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    private static final ForgeConfigSpec.BooleanValue NO_POISON_REGEN;
     private static final ForgeConfigSpec.BooleanValue NO_BOAT_FALL_DMG;
     private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
     private static final ForgeConfigSpec.BooleanValue NO_TEMPT_COOLDOWN;
@@ -30,7 +31,8 @@ public class CommonConfig {
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     static {
-        BUILDER.push("Misc Tweaks");
+        NO_POISON_REGEN = BUILDER.comment("Makes poison and regeneration cancel each other out.")
+                .define("noPoisonedRegen", true);
 
         NO_BOAT_FALL_DMG = BUILDER.comment("Stop boats from taking fall damage and breaking.")
             .define("noBoatFallDamage", true);
@@ -45,7 +47,6 @@ public class CommonConfig {
             .defineListAllowEmpty("mobGriefBlacklist", List.of("minecraft:creeper", "minecraft:enderman", "minecraft:fireball", "minecraft:wither_skull"),
                 obj -> obj instanceof String);
 
-        BUILDER.pop();
         BUILDER.push("Spawn Structure");
 
         STRUCTURE_SPAWNPOINT = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (a single ID or a Tag, leave empty to disable)")
@@ -59,6 +60,7 @@ public class CommonConfig {
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
+    public static boolean noPoisonRegen = true;
     public static boolean noBoatFallDmg = true;
     public static boolean unlimitedVillager = true;
     public static boolean noTemptCooldown = true;
@@ -74,6 +76,7 @@ public class CommonConfig {
             return;
         }
 
+        noPoisonRegen = NO_POISON_REGEN.get();
         noBoatFallDmg = NO_BOAT_FALL_DMG.get();
         unlimitedVillager = UNLIMITED_VILLAGER.get();
         noTemptCooldown = NO_TEMPT_COOLDOWN.get();
