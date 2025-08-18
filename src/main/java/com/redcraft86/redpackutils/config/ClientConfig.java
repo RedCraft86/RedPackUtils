@@ -20,16 +20,26 @@ import com.redcraft86.redpackutils.ModClass;
 public class ClientConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    private static final ForgeConfigSpec.ConfigValue<Boolean> MEM_USAGE;
+    private static final ForgeConfigSpec.ConfigValue<? extends String> TITLE_NAME;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> STARTUP_SOUNDS;
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     static {
+        MEM_USAGE = BUILDER.comment("Show memory usage in the window title.")
+                .define("showMemUsage", true);
+
+        TITLE_NAME = BUILDER.comment("Name to be used in the window title instead of \"Minecraft* Forge\".\nRemains unchanged if blank or DEFAULT. May flicker due to the way it's implemented.")
+                .define("titleName", "DEFAULT");
+
         STARTUP_SOUNDS = BUILDER.comment("Picks a random sound from this list to play on startup.\nLeave empty to disable. Format is: \"sound_id volume\"")
             .defineListAllowEmpty("startupSounds", List.of("minecraft:entity.experience_orb.pickup 0.7", "minecraft:entity.player.levelup 0.3"),
                 obj -> obj instanceof String);
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
+    public static boolean memUsage = false;
+    public static String titleName = null;
     public static Map<ResourceLocation, Float> startupSounds = new HashMap<>();
 
     @SubscribeEvent
@@ -37,6 +47,12 @@ public class ClientConfig {
     {
         if (event.getConfig().getSpec() != SPEC) {
             return;
+        }
+
+        memUsage = MEM_USAGE.get();
+        titleName = TITLE_NAME.get();
+        if (titleName.isBlank() || titleName.equals("DEFAULT")) {
+            titleName = null;
         }
 
         processStartupSounds();
