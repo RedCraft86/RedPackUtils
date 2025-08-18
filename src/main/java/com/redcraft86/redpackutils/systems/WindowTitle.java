@@ -78,7 +78,8 @@ public class WindowTitle {
             Runtime runtime = Runtime.getRuntime();
             long totalMem = runtime.totalMemory();
             long usedMem = (totalMem - runtime.freeMemory()) / (1024 * 1024);
-            result.append(String.format(" | Memory: %,d MB / %,d MB", usedMem, totalMem / (1024 * 1024)));
+            result.append(String.format(" | Memory: %,d MB / %,d MB (%,d MB Allocated)", usedMem,
+                    runtime.maxMemory() / (1024 * 1024), totalMem / (1024 * 1024)));
         }
 
         return result.toString();
