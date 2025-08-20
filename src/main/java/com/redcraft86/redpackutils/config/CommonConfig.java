@@ -24,7 +24,6 @@ public class CommonConfig {
     private static final ForgeConfigSpec.BooleanValue NO_ATK_COOLDOWN;
     private static final ForgeConfigSpec.BooleanValue NO_BOAT_FALL_DMG;
     private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
-    private static final ForgeConfigSpec.BooleanValue NO_TEMPT_COOLDOWN;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> GRIEF_BLACKLIST;
 
     private static final ForgeConfigSpec.ConfigValue<? extends String> STRUCTURE_SPAWNPOINT;
@@ -41,11 +40,8 @@ public class CommonConfig {
         NO_BOAT_FALL_DMG = BUILDER.comment("Stop boats from taking fall damage and breaking.")
             .define("noBoatFallDamage", true);
 
-        UNLIMITED_VILLAGER = BUILDER.comment("Prevents Villagers and Wandering Traders from locking their trades when they run 'out of stock.'")
+        UNLIMITED_VILLAGER = BUILDER.comment("Prevents Villagers and Wandering Traders from locking their trades when they go 'out of stock.'")
             .define("unlimitedVillager", true);
-
-        NO_TEMPT_COOLDOWN = BUILDER.comment("Disables the cooldown period that prevents animals from being immediately re-attracted to tempting items (like food) after losing interest.")
-            .define("noTemptCooldown", true);
 
         GRIEF_BLACKLIST = BUILDER.comment("List of entity IDs that cannot grief the world.")
             .defineListAllowEmpty("mobGriefBlacklist", List.of("minecraft:creeper", "minecraft:enderman", "minecraft:fireball", "minecraft:wither_skull"),
@@ -68,7 +64,6 @@ public class CommonConfig {
     public static boolean noAtkCooldown = false;
     public static boolean noBoatFallDmg = true;
     public static boolean unlimitedVillager = true;
-    public static boolean noTemptCooldown = true;
     public static Set<ResourceLocation> griefBlacklist = new HashSet<>();
 
     public static String structureSpawnPoint = "#minecraft:village";
@@ -85,7 +80,6 @@ public class CommonConfig {
         noAtkCooldown = NO_ATK_COOLDOWN.get();
         noBoatFallDmg = NO_BOAT_FALL_DMG.get();
         unlimitedVillager = UNLIMITED_VILLAGER.get();
-        noTemptCooldown = NO_TEMPT_COOLDOWN.get();
         processIdList(GRIEF_BLACKLIST.get(), griefBlacklist, "Grief Blacklist");
 
         structureSpawnPoint = STRUCTURE_SPAWNPOINT.get();
