@@ -15,6 +15,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class CreativeInventoryMixin {
     @Redirect(method = "getTooltipFromContainerItem", at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z"), require = 0)
     private boolean redirectHasNext(Iterator<CreativeModeTab> iterator) {
-        return !ClientConfig.noCreativeTabTips && iterator.hasNext();
+        return false;
     }
 }

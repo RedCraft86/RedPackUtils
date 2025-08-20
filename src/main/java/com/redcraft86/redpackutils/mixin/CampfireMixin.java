@@ -46,7 +46,7 @@ public class CampfireMixin {
 
             for (Map.Entry<MobEffect, Integer> entry : CommonConfig.campfireEffects.entrySet()) {
                 if (entry.getKey() != null) {
-                    player.addEffect(new MobEffectInstance(entry.getKey(), 20,
+                    player.addEffect(new MobEffectInstance(entry.getKey(), 40,
                             entry.getValue(), false, false, true));
                 }
             }

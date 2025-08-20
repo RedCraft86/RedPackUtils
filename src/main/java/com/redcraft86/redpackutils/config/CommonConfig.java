@@ -20,10 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class CommonConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private static final ForgeConfigSpec.BooleanValue NO_POISON_REGEN;
     private static final ForgeConfigSpec.BooleanValue NO_ATK_COOLDOWN;
-    private static final ForgeConfigSpec.BooleanValue NO_BOAT_FALL_DMG;
-    private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> GRIEF_BLACKLIST;
 
     private static final ForgeConfigSpec.IntValue CAMPFIRE_EFFECT_RANGE;
@@ -34,17 +31,9 @@ public class CommonConfig {
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     static {
-        NO_POISON_REGEN = BUILDER.comment("Makes poison and regeneration cancel each other out.")
-            .define("noPoisonedRegen", true);
 
         NO_ATK_COOLDOWN = BUILDER.comment("Removes the attack cooldown introduced in the 1.9 Combat Update.")
             .define("noAtkCooldown", false);
-
-        NO_BOAT_FALL_DMG = BUILDER.comment("Stop boats from taking fall damage and breaking.")
-            .define("noBoatFallDamage", true);
-
-        UNLIMITED_VILLAGER = BUILDER.comment("Prevents Villagers and Wandering Traders from locking their trades when they go 'out of stock.'")
-            .define("unlimitedVillager", true);
 
         GRIEF_BLACKLIST = BUILDER.comment("List of entity IDs that cannot grief the world.")
             .defineListAllowEmpty("mobGriefBlacklist", List.of("minecraft:creeper", "minecraft:enderman", "minecraft:fireball", "minecraft:wither_skull"),
@@ -73,10 +62,7 @@ public class CommonConfig {
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
-    public static boolean noPoisonRegen = true;
     public static boolean noAtkCooldown = false;
-    public static boolean noBoatFallDmg = true;
-    public static boolean unlimitedVillager = true;
     public static Set<ResourceLocation> griefBlacklist = new HashSet<>();
 
     public static int campfireEffRange = 3;
@@ -92,10 +78,7 @@ public class CommonConfig {
             return;
         }
 
-        noPoisonRegen = NO_POISON_REGEN.get();
         noAtkCooldown = NO_ATK_COOLDOWN.get();
-        noBoatFallDmg = NO_BOAT_FALL_DMG.get();
-        unlimitedVillager = UNLIMITED_VILLAGER.get();
         processIdList(GRIEF_BLACKLIST.get(), griefBlacklist, "Grief Blacklist");
 
         campfireEffRange = CAMPFIRE_EFFECT_RANGE.get();

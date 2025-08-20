@@ -44,8 +44,7 @@ public class EntityEvents {
         }
 
         Entity entity = e.getTarget();
-
-        if (CommonConfig.unlimitedVillager && entity instanceof AbstractVillager villager) {
+        if (entity instanceof AbstractVillager villager) {
             for (MerchantOffer offer : villager.getOffers()) {
                 offer.resetUses();
                 offer.maxUses = Integer.MAX_VALUE;
@@ -78,10 +77,6 @@ public class EntityEvents {
     }
 
     private static void checkPoisonRegen(LivingEntity player) {
-        if (!CommonConfig.noPoisonRegen) {
-            return;
-        }
-
         MobEffectInstance poison = player.getEffect(MobEffects.POISON);
         MobEffectInstance regen = player.getEffect(MobEffects.REGENERATION);
 

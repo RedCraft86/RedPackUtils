@@ -16,7 +16,7 @@ import com.redcraft86.redpackutils.config.CommonConfig;
 public class BoatMixin {
     @Inject(method = "checkFallDamage", at = @At("HEAD"), cancellable = true)
     private void removeFallDmg(double Y, boolean onGround, BlockState state, BlockPos pos, CallbackInfo ci) {
-        if (CommonConfig.noBoatFallDmg && onGround) {
+        if (onGround) {
             ci.cancel();
         }
     }
