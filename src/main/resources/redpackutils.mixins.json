@@ -7,10 +7,11 @@
   "mixins": [
     "BoatMixin",
     "CampfireMixin",
-    "CreativeInventoryMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "TemptGoalMixin"
   ],
   "client": [
+    "CreativeInventoryMixin",
     "MinecraftMixin"
   ],
   "minVersion": "0.8"
