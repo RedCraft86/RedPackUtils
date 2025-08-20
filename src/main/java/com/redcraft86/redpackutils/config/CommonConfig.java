@@ -44,7 +44,7 @@ public class CommonConfig {
             .define("campfireNoHarm", true);
 
         CAMPFIRE_EFFECTS = BUILDER.comment("Effects to give when near campfires. Leave empty to disable.\nFormat is: \"effect_id level\" (Level Range: 1 ~ 256)")
-            .defineListAllowEmpty("campfireEffects", List.of("minecraft:regeneration 2", "minecraft:saturation 2", "minecraft:resistance 2", "minecraft:strength 2"),
+            .defineListAllowEmpty("campfireEffects", List.of("minecraft:regeneration 1", "minecraft:saturation 1"),
                 obj -> obj instanceof final String name && ResourceLocation.isValidResourceLocation(name.split(" ", 2)[0]));
 
         BUILDER.pop();
