@@ -2,8 +2,6 @@ package com.redcraft86.redpackutils.mixin;
 
 import java.util.Iterator;
 
-import com.redcraft86.redpackutils.config.ClientConfig;
-
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 

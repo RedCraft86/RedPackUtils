@@ -1,7 +1,5 @@
 package com.redcraft86.redpackutils.mixin;
 
-import com.redcraft86.redpackutils.config.CommonConfig;
-
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 
 import org.spongepowered.asm.mixin.Mixin;
