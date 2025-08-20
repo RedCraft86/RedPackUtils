@@ -24,6 +24,7 @@ public class ModClass {
         IEventBus modEventBus = context.getModEventBus();
 
         ModGameRules.registerRules();
+        MiscPatches.applyManualPatches();
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);

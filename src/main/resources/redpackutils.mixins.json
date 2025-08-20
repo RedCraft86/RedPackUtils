@@ -8,7 +8,8 @@
     "BoatMixin",
     "CampfireMixin",
     "PlayerMixin",
-    "TemptGoalMixin"
+    "TemptGoalMixin",
+    "accessor.ItemAccessor"
   ],
   "client": [
     "compat.ExplorersCompassMixin",
