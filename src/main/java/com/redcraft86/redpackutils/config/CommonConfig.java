@@ -1,20 +1,20 @@
 package com.redcraft86.redpackutils.config;
 
-import com.mojang.logging.LogUtils;
+import com.redcraft86.redpackutils.ModClass;
+
+import java.util.*;
 import org.slf4j.Logger;
+import com.mojang.logging.LogUtils;
 
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
-
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.resources.ResourceLocation;
 
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
-
-import com.redcraft86.redpackutils.ModClass;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonConfig {
@@ -25,6 +25,9 @@ public class CommonConfig {
     private static final ForgeConfigSpec.BooleanValue NO_BOAT_FALL_DMG;
     private static final ForgeConfigSpec.BooleanValue UNLIMITED_VILLAGER;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> GRIEF_BLACKLIST;
+
+    private static final ForgeConfigSpec.IntValue CAMPFIRE_EFFECT_RANGE;
+    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> CAMPFIRE_EFFECTS;
 
     private static final ForgeConfigSpec.ConfigValue<? extends String> STRUCTURE_SPAWNPOINT;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> SPAWN_POINT_BLACKLIST;
@@ -47,6 +50,16 @@ public class CommonConfig {
             .defineListAllowEmpty("mobGriefBlacklist", List.of("minecraft:creeper", "minecraft:enderman", "minecraft:fireball", "minecraft:wither_skull"),
                 obj -> obj instanceof String);
 
+        BUILDER.push("Campfire Effects");
+
+        CAMPFIRE_EFFECT_RANGE = BUILDER.comment("The range around the campfire in which players will receive effects. Set to 0 to disable feature.")
+            .defineInRange("campfireRange", 3, 0, 10);
+
+        CAMPFIRE_EFFECTS = BUILDER.comment("Effects to give when near campfires. Leave empty to disable.\nFormat is: \"effect_id level\" (Level Range: 1 ~ 256)")
+            .defineListAllowEmpty("campfireEffects", List.of("minecraft:regeneration 2", "minecraft:saturation 2", "minecraft:resistance 2", "minecraft:strength 2"),
+                obj -> obj instanceof final String name && ResourceLocation.isValidResourceLocation(name.split(" ", 2)[0]));
+
+        BUILDER.pop();
         BUILDER.push("Spawn Structure");
 
         STRUCTURE_SPAWNPOINT = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (a single ID or a Tag, leave empty to disable)")
@@ -66,6 +79,9 @@ public class CommonConfig {
     public static boolean unlimitedVillager = true;
     public static Set<ResourceLocation> griefBlacklist = new HashSet<>();
 
+    public static int campfireEffRange = 3;
+    public static Map<MobEffect, Integer> campfireEffects = new HashMap<>();
+
     public static String structureSpawnPoint = "#minecraft:village";
     public static Set<ResourceLocation> spawnPointBlacklist = new HashSet<>();
 
@@ -82,8 +98,48 @@ public class CommonConfig {
         unlimitedVillager = UNLIMITED_VILLAGER.get();
         processIdList(GRIEF_BLACKLIST.get(), griefBlacklist, "Grief Blacklist");
 
+        campfireEffRange = CAMPFIRE_EFFECT_RANGE.get();
+        if (campfireEffRange > 0) {
+            processCampfireEffects(CAMPFIRE_EFFECTS.get());
+        } else {
+            campfireEffects.clear();
+        }
+
         structureSpawnPoint = STRUCTURE_SPAWNPOINT.get();
         processIdList(SPAWN_POINT_BLACKLIST.get(), spawnPointBlacklist, "Structure Spawn Point (Blacklist)");
+    }
+
+    private static void processCampfireEffects(List<? extends String> entries) {
+        campfireEffects.clear();
+        for (String entry : entries) {
+            String[] parts = entry.split(" ", 2);
+            if (parts.length < 2) {
+                LOGGER.error("[RedPackUtils: Campfire Effects] Failed to parse entry '{}'", entry);
+                continue;
+            }
+
+            if (ResourceLocation.isValidResourceLocation(parts[0])){
+                MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(ResourceLocation.parse(parts[0]));
+                if (effect == null) {
+                    LOGGER.error("[RedPackUtils: Campfire Effects] Effect {} does not exist in registry", parts[0]);
+                    continue;
+                }
+
+                int amplifier = 0;
+                try {
+                    amplifier = Mth.clamp(Integer.parseInt(parts[1]) - 1, 0, 255);
+                } catch (NumberFormatException e) {
+                    LOGGER.error("[RedPackUtils: Campfire Effects] Failed to parse level in '{}' because {}", entry, e);
+                }
+                finally {
+                    if (amplifier >= 0) {
+                        campfireEffects.put(effect, amplifier);
+                    }
+                }
+            } else {
+                LOGGER.error("[RedPackUtils: Campfire Effects] Invalid ID: {}", entry);
+            }
+        }
     }
 
     private static void processIdList(List<? extends String> entries, Set<ResourceLocation> result, String logCategory) {
