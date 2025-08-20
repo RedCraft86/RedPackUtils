@@ -1,11 +1,11 @@
 package com.redcraft86.redpackutils.systems;
 
-import java.util.Optional;
-import java.util.Set;
+import com.redcraft86.redpackutils.config.CommonConfig;
 
+import java.util.Set;
+import java.util.Optional;
 import com.mojang.logging.LogUtils;
 import com.mojang.datafixers.util.Pair;
-import com.redcraft86.redpackutils.config.CommonConfig;
 import org.slf4j.Logger;
 
 import net.minecraft.tags.TagKey;
@@ -13,8 +13,10 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
@@ -22,7 +24,24 @@ import net.minecraft.resources.ResourceKey;
 public class StructureSpawn {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static boolean trySetSpawnPoint(ServerLevel level, String structure) {
+    public static boolean onWorldCreate(LevelAccessor levelAccessor) {
+        String structure = CommonConfig.structureSpawnPoint.trim();
+        if (structure.isEmpty()) {
+            LOGGER.info("[RedPackUtils: Structure Spawn Point] Feature is disabled, spawning in normally...");
+            return false;
+        } else if (!structure.contains(":")) {
+            LOGGER.error("[RedPackUtils: Structure Spawn Point] ID/Tag is invalid, spawning in normally...");
+            return false;
+        }
+
+        if (!levelAccessor.isClientSide() && levelAccessor instanceof Level level) {
+            return StructureSpawn.trySetSpawnPoint((ServerLevel) level, structure);
+        }
+
+        return false;
+    }
+
+    private static boolean trySetSpawnPoint(ServerLevel level, String structure) {
         if (level == null) {
             LOGGER.error("[RedPackUtils: Structure Spawn Point] Server Level is null!");
             return false;
