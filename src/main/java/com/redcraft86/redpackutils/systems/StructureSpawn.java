@@ -1,11 +1,15 @@
 package com.redcraft86.redpackutils.systems;
 
+import com.redcraft86.redpackutils.ModClass;
 import com.redcraft86.redpackutils.config.CommonConfig;
 
 import java.util.Set;
 import java.util.Optional;
 import com.mojang.logging.LogUtils;
 import com.mojang.datafixers.util.Pair;
+import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
 import net.minecraft.tags.TagKey;
@@ -21,24 +25,27 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 
+@Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class StructureSpawn {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static boolean onWorldCreate(LevelAccessor levelAccessor) {
+    @SubscribeEvent(receiveCanceled = true)
+    private static void onWorldCreate(LevelEvent.CreateSpawnPosition e) {
         String structure = CommonConfig.structureSpawnPoint.trim();
         if (structure.isEmpty()) {
             LOGGER.info("[RedPackUtils: Structure Spawn Point] Feature is disabled, spawning in normally...");
-            return false;
+            return;
         } else if (!structure.contains(":")) {
             LOGGER.error("[RedPackUtils: Structure Spawn Point] ID/Tag is invalid, spawning in normally...");
-            return false;
+            return;
         }
 
+        LevelAccessor levelAccessor = e.getLevel();
         if (!levelAccessor.isClientSide() && levelAccessor instanceof Level level) {
-            return StructureSpawn.trySetSpawnPoint((ServerLevel) level, structure);
+            if (StructureSpawn.trySetSpawnPoint((ServerLevel) level, structure)) {
+                e.setCanceled(true);
+            }
         }
-
-        return false;
     }
 
     private static boolean trySetSpawnPoint(ServerLevel level, String structure) {
