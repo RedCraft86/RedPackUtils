@@ -28,6 +28,10 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         LivingEntity player = event.player;
+        if (player.level().isClientSide()) {
+            return;
+        }
+
         if (event.phase == TickEvent.Phase.END) {
             checkPoisonRegen(player);
         }
@@ -35,7 +39,7 @@ public class EntityEvents {
 
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {
-        if (e.getLevel().isClientSide() && e.getHand() != InteractionHand.MAIN_HAND) {
+        if (e.getLevel().isClientSide() || e.getHand() != InteractionHand.MAIN_HAND) {
             return;
         }
 
@@ -63,6 +67,9 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onMobGrief(EntityMobGriefingEvent e) {
         Entity entity = e.getEntity();
+        if (entity.level().isClientSide()) {
+            return;
+        }
 
         ResourceLocation entityID = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
         if (entityID != null && CommonConfig.griefBlacklist.contains(entityID)) {
