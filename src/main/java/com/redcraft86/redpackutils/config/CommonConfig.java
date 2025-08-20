@@ -20,7 +20,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class CommonConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private static final ForgeConfigSpec.BooleanValue NO_ATK_COOLDOWN;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> GRIEF_BLACKLIST;
 
     private static final ForgeConfigSpec.IntValue CAMPFIRE_EFFECT_RANGE;
@@ -32,10 +31,6 @@ public class CommonConfig {
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     static {
-
-        NO_ATK_COOLDOWN = BUILDER.comment("Removes the attack cooldown introduced in the 1.9 Combat Update.")
-            .define("noAtkCooldown", false);
-
         GRIEF_BLACKLIST = BUILDER.comment("List of entity IDs that cannot grief the world.")
             .defineListAllowEmpty("mobGriefBlacklist", List.of("minecraft:creeper", "minecraft:enderman", "minecraft:fireball", "minecraft:wither_skull"),
                 obj -> obj instanceof String);
@@ -66,7 +61,6 @@ public class CommonConfig {
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
-    public static boolean noAtkCooldown = false;
     public static Set<ResourceLocation> griefBlacklist = new HashSet<>();
 
     public static int campfireEffRange = 3;
@@ -83,7 +77,6 @@ public class CommonConfig {
             return;
         }
 
-        noAtkCooldown = NO_ATK_COOLDOWN.get();
         processIdList(GRIEF_BLACKLIST.get(), griefBlacklist, "Grief Blacklist");
 
         campfireEffRange = CAMPFIRE_EFFECT_RANGE.get();

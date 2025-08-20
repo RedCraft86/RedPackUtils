@@ -1,10 +1,10 @@
 package com.redcraft86.redpackutils.mixin;
 
-import com.redcraft86.redpackutils.config.CommonConfig;
+import com.redcraft86.redpackutils.ModGameRules;
 
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,17 +16,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Player.class)
 public class PlayerMixin {
 
-    // These two mixin removes the damage strength cooldown
+    // These two mixins remove the damage strength cooldown
     @Inject(method = "resetAttackStrengthTicker", at = @At("HEAD"), cancellable = true)
     public void cancelStrengthTicker(CallbackInfo ci) {
-        if (CommonConfig.noAtkCooldown) {
+        if (((Player)(Object)this).level().getGameRules().getBoolean(ModGameRules.NO_ATTACK_COOLDOWN)) {
             ci.cancel();
         }
     }
 
     @Inject(method = "getAttackStrengthScale", at = @At("HEAD"), cancellable = true)
     public void getMaxAtkStrength(float adjustTicks, CallbackInfoReturnable<Float> cir) {
-        if (CommonConfig.noAtkCooldown) {
+        if (((Player)(Object)this).level().getGameRules().getBoolean(ModGameRules.NO_ATTACK_COOLDOWN)) {
             cir.setReturnValue(1.0f);
         }
     }

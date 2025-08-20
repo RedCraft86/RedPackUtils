@@ -1,20 +1,17 @@
 package com.redcraft86.redpackutils.events;
 
 import com.redcraft86.redpackutils.ModClass;
+import com.redcraft86.redpackutils.ModGameRules;
 import com.redcraft86.redpackutils.config.CommonConfig;
 
+import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -42,11 +39,13 @@ public class EntityEvents {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent event) {
-        if (event.getEntity() == null || event.getSource() == null || event.getEntity().level().isClientSide()) {
+        Level level = event.getEntity().level();
+        if (event.getEntity() == null || event.getSource() == null || level.isClientSide()) {
             return;
         }
 
-        if (CommonConfig.noAtkCooldown && event.getSource().is(DamageTypes.PLAYER_ATTACK)) {
+        if (level.getGameRules().getBoolean(ModGameRules.NO_ATTACK_COOLDOWN)
+                && event.getSource().is(DamageTypes.PLAYER_ATTACK)) {
             event.getEntity().invulnerableTime = 0;
         }
     }
