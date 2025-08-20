@@ -28,10 +28,10 @@ public class ClientConfig {
 
     static {
         TITLE_NAME = BUILDER.comment("Name to be used in the window title instead of \"Minecraft* Forge\".\nRemains unchanged if blank or DEFAULT.")
-            .define("titleName", "DEFAULT");
+            .define("windowTitleName", "DEFAULT");
 
         MEM_USAGE = BUILDER.comment("Show memory usage in the window title.")
-                .define("showMemUsage", true);
+                .define("showMemoryUsage", true);
 
         STARTUP_SOUNDS = BUILDER.comment("Picks a random sound from this list to play on startup.\nLeave empty to disable. Format is: \"sound_id volume\"")
             .defineListAllowEmpty("startupSounds", List.of("minecraft:entity.experience_orb.pickup 0.7", "minecraft:entity.player.levelup 0.3"),
