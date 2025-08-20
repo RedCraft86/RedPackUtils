@@ -31,3 +31,6 @@ side="BOTH"
 
 [modproperties.${mod_id}]
 catalogueImageIcon = "logo.png"
+
+[[mixins]]
+config="redpackutils.mixins.json"

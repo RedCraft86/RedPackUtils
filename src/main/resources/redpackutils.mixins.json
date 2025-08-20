@@ -6,8 +6,8 @@
   "plugin": "com.redcraft86.redpackutils.mixin.MixinPlugin",
   "mixins": [
     "BoatMixin",
-    "PlayerMixin",
-    "TemptGoalMixin"
+    "CampfireMixin",
+    "PlayerMixin"
   ],
   "minVersion": "0.8"
 }
