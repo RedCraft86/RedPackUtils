@@ -1,4 +1,4 @@
-package com.redcraft86.redpackutils.mixin;
+package com.redcraft86.redpackutils.mixin.compat;
 
 import java.util.List;
 import java.util.Set;
@@ -13,6 +13,12 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClass, String mixinClass) {
+        if (mixinClass.endsWith("ClientEventHandler")) {
+            return isModIncluded("explorerscompass");
+        }
+        if (mixinClass.endsWith("NaturesCompassMixin")) {
+            return isModIncluded("naturescompass");
+        }
         return true;
     }
 

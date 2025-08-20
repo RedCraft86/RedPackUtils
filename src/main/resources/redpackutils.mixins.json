@@ -3,7 +3,7 @@
   "package": "com.redcraft86.redpackutils.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "redpackutils.refmap.json",
-  "plugin": "com.redcraft86.redpackutils.mixin.MixinPlugin",
+  "plugin": "com.redcraft86.redpackutils.mixin.compat.MixinPlugin",
   "mixins": [
     "BoatMixin",
     "CampfireMixin",
@@ -11,6 +11,8 @@
     "TemptGoalMixin"
   ],
   "client": [
+    "compat.ExplorersCompassMixin",
+    "compat.NaturesCompassMixin",
     "CreativeInventoryMixin",
     "MinecraftMixin"
   ],
