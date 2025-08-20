@@ -54,7 +54,7 @@ public class CommonConfig {
         STRUCTURE_SPAWNPOINT = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (a single ID or a Tag, leave empty to disable)")
             .define("structureID", "#minecraft:village");
 
-        SPAWN_POINT_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid structure spawn point. (Only used when spawnStructure is a Tag)")
+        SPAWN_POINT_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid structure spawn point. (Only used when structureID is a Tag)")
             .defineListAllowEmpty("structureBlacklist", List.of("minecraft:village_snowy"),
                 obj -> obj instanceof String);
 

@@ -10,11 +10,11 @@ import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-// Lets you shoot bows with Infinity without needing a single arrow in inventory
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class BowArrowEvents {
     @SubscribeEvent
     public static void InfinityArrows(ArrowNockEvent event) {
+        // Lets you shoot bows with Infinity without needing a single arrow in inventory
         ItemStack bow = event.getBow();
         if (bow.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) > 0) {
             event.getEntity().startUsingItem(event.getHand());
