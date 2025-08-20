@@ -26,18 +26,6 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EntityEvents {
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        LivingEntity player = event.player;
-        if (player.level().isClientSide()) {
-            return;
-        }
-
-        if (event.phase == TickEvent.Phase.END) {
-            checkPoisonRegen(player);
-        }
-    }
-
-    @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {
         if (e.getLevel().isClientSide() || e.getHand() != InteractionHand.MAIN_HAND) {
             return;
@@ -73,24 +61,6 @@ public class EntityEvents {
         ResourceLocation entityID = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
         if (entityID != null && CommonConfig.griefBlacklist.contains(entityID)) {
             e.setResult(Event.Result.DENY);
-        }
-    }
-
-    private static void checkPoisonRegen(LivingEntity player) {
-        MobEffectInstance poison = player.getEffect(MobEffects.POISON);
-        MobEffectInstance regen = player.getEffect(MobEffects.REGENERATION);
-
-        if (poison != null && regen != null){
-            int durationDiff = poison.getDuration() - regen.getDuration();
-            int amplifierDiff = Math.max(Math.abs(poison.getAmplifier() - regen.getAmplifier()), 255);
-
-            player.removeEffect(MobEffects.POISON);
-            player.removeEffect(MobEffects.REGENERATION);
-
-            if (durationDiff != 0) {
-                MobEffect effectToKeep = durationDiff > 0 ? MobEffects.POISON : MobEffects.REGENERATION;
-                player.addEffect(new MobEffectInstance(effectToKeep, Math.abs(durationDiff), amplifierDiff));
-            }
         }
     }
 }

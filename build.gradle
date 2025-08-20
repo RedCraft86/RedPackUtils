@@ -84,6 +84,10 @@ dependencies {
     implementation fg.deobf("maven.modrinth:tag-tooltips:OFBFNuzP")
     implementation fg.deobf("curse.maven:config-menus-forge-544048:4672356")
 
+    implementation fg.deobf("curse.maven:raised-570368:6848664")
+    implementation fg.deobf("curse.maven:explorers-compass-491794:4712194")
+    implementation fg.deobf("curse.maven:natures-compass-252848:4712189")
+
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
