@@ -4,14 +4,15 @@ import com.mojang.logging.LogUtils;
 import com.redcraft86.redpackutils.config.CommonConfig;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.CampfireBlockEntity;
 
-import net.minecraft.world.phys.AABB;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -42,6 +43,15 @@ public class CampfireMixin {
         for (Player player : players) {
             if (player == null || player.isSpectator()) {
                 continue;
+            }
+
+            if (CommonConfig.campfireClearHarm)
+            {
+                for (MobEffectInstance effect : player.getActiveEffects()) {
+                    if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+                        player.removeEffect(effect.getEffect());
+                    }
+                }
             }
 
             for (Map.Entry<MobEffect, Integer> entry : CommonConfig.campfireEffects.entrySet()) {

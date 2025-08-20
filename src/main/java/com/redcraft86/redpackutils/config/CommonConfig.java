@@ -24,6 +24,7 @@ public class CommonConfig {
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> GRIEF_BLACKLIST;
 
     private static final ForgeConfigSpec.IntValue CAMPFIRE_EFFECT_RANGE;
+    private static final ForgeConfigSpec.BooleanValue CAMPFIRE_CLEAR_HARM;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> CAMPFIRE_EFFECTS;
 
     private static final ForgeConfigSpec.ConfigValue<? extends String> STRUCTURE_SPAWNPOINT;
@@ -43,6 +44,9 @@ public class CommonConfig {
 
         CAMPFIRE_EFFECT_RANGE = BUILDER.comment("The range around the campfire in which players will receive effects. Set to 0 to disable feature.")
             .defineInRange("campfireRange", 3, 0, 10);
+
+        CAMPFIRE_CLEAR_HARM = BUILDER.comment("If the campfire should clear harmful effects.")
+            .define("campfireNoHarm", true);
 
         CAMPFIRE_EFFECTS = BUILDER.comment("Effects to give when near campfires. Leave empty to disable.\nFormat is: \"effect_id level\" (Level Range: 1 ~ 256)")
             .defineListAllowEmpty("campfireEffects", List.of("minecraft:regeneration 2", "minecraft:saturation 2", "minecraft:resistance 2", "minecraft:strength 2"),
@@ -66,6 +70,7 @@ public class CommonConfig {
     public static Set<ResourceLocation> griefBlacklist = new HashSet<>();
 
     public static int campfireEffRange = 3;
+    public static boolean campfireClearHarm = true;
     public static Map<MobEffect, Integer> campfireEffects = new HashMap<>();
 
     public static String structureSpawnPoint = "#minecraft:village";
@@ -82,6 +87,7 @@ public class CommonConfig {
         processIdList(GRIEF_BLACKLIST.get(), griefBlacklist, "Grief Blacklist");
 
         campfireEffRange = CAMPFIRE_EFFECT_RANGE.get();
+        campfireClearHarm = CAMPFIRE_CLEAR_HARM.get();
         if (campfireEffRange > 0) {
             processCampfireEffects(CAMPFIRE_EFFECTS.get());
         } else {
