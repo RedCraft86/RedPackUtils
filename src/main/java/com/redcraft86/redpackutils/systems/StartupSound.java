@@ -29,7 +29,7 @@ public class StartupSound {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     @SubscribeEvent
-    private static void onScreenOpen(ScreenEvent.Opening event) {
+    void onScreenOpen(ScreenEvent.Opening event) {
         if (!hasPlayed && event.getNewScreen() instanceof TitleScreen) {
             hasPlayed = true;
 

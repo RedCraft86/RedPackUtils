@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class MiscEvents {
     @SubscribeEvent // Make infinity bows no longer require one arrow
-    public static void InfinityArrows(ArrowNockEvent event) {
+    static void InfinityArrows(ArrowNockEvent event) {
         ItemStack bow = event.getBow();
         if (bow.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) > 0) {
             event.getEntity().startUsingItem(event.getHand());
@@ -36,7 +36,7 @@ public class MiscEvents {
     }
 
     @SubscribeEvent // Make villagers don't run out of stock
-    private static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {
+    static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {
         if (e.getLevel().isClientSide() || e.getHand() != InteractionHand.MAIN_HAND) {
             return;
         }
@@ -51,7 +51,7 @@ public class MiscEvents {
     }
 
     @SubscribeEvent // Stop mob griefing on blacklisted entities
-    private static void onMobGrief(EntityMobGriefingEvent e) {
+    static void onMobGrief(EntityMobGriefingEvent e) {
         Entity entity = e.getEntity();
         if (entity.level().isClientSide()) {
             return;
@@ -64,7 +64,7 @@ public class MiscEvents {
     }
 
     @SubscribeEvent // For no attack cooldown
-    private static void onLivingDamage(LivingDamageEvent event) {
+    static void onLivingDamage(LivingDamageEvent event) {
         Level level = event.getEntity().level();
         if (event.getEntity() == null || event.getSource() == null || level.isClientSide()) {
             return;

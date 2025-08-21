@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EntityEvents {
     @SubscribeEvent
-    private static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {
+    static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {
         if (e.getLevel().isClientSide() || e.getHand() != InteractionHand.MAIN_HAND) {
             return;
         }
@@ -38,7 +38,7 @@ public class EntityEvents {
     }
 
     @SubscribeEvent
-    private static void onLivingDamage(LivingDamageEvent event) {
+    static void onLivingDamage(LivingDamageEvent event) {
         Level level = event.getEntity().level();
         if (event.getEntity() == null || event.getSource() == null || level.isClientSide()) {
             return;
@@ -51,7 +51,7 @@ public class EntityEvents {
     }
 
     @SubscribeEvent
-    private static void onMobGrief(EntityMobGriefingEvent e) {
+    static void onMobGrief(EntityMobGriefingEvent e) {
         Entity entity = e.getEntity();
         if (entity.level().isClientSide()) {
             return;

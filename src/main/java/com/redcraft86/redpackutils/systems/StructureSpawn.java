@@ -30,7 +30,7 @@ public class StructureSpawn {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     @SubscribeEvent(receiveCanceled = true)
-    private static void onWorldCreate(LevelEvent.CreateSpawnPosition e) {
+    static void onWorldCreate(LevelEvent.CreateSpawnPosition e) {
         String structure = CommonConfig.structureSpawnPoint.trim();
         if (structure.isEmpty()) {
             LOGGER.info("[RedPackUtils: Structure Spawn Point] Feature is disabled, spawning in normally...");
