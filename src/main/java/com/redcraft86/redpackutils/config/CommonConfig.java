@@ -109,7 +109,7 @@ public class CommonConfig {
             return;
         }
 
-        processIdListRL(GRIEF_BLACKLIST.get(), griefBlacklist, "Grief Blacklist");
+        processIdList(GRIEF_BLACKLIST.get(), griefBlacklist, "Grief Blacklist");
 
         campfireEffRange = CAMPFIRE_EFFECT_RANGE.get();
         if (campfireEffRange > 0) {
@@ -119,16 +119,15 @@ public class CommonConfig {
             campfireEffects.clear();
         }
 
-        regenFlowerList = true;
         bonemealDirtGrass = BONEMEAL_DIRT_GRASS.get();
-        shortGrassChance = Math.min(100.0f, (float)SHORT_GRASS_CHANCE.get() / 100.0f);
-        tallGrassChance = Math.min(100.0f, (float)TALL_GRASS_CHANCE.get() / 100.0f);
-        randomFlowerChance = Math.min(100.0f, (float)RANDOM_FLOWER_CHANCE.get() / 100.0f);
-        processIdListStr(FLOWER_BLACKLIST.get(), flowerBlacklist, "Better Bonemeal (Blacklist)");
+        shortGrassChance = Math.min(100.0f, (float) SHORT_GRASS_CHANCE.get() / 100.0f);
+        tallGrassChance = Math.min(100.0f, (float) TALL_GRASS_CHANCE.get() / 100.0f);
+        randomFlowerChance = Math.min(100.0f, (float) RANDOM_FLOWER_CHANCE.get() / 100.0f);
+        updateFlowerBlacklist();
 
         structureSpawnPoint = STRUCTURE_SPAWNPOINT.get();
         if (ResourceLocation.isValidResourceLocation(structureSpawnPoint)) {
-            processIdListRL(SPAWN_POINT_BLACKLIST.get(), spawnPointBlacklist, "Structure Spawn Point (Blacklist)");
+            processIdList(SPAWN_POINT_BLACKLIST.get(), spawnPointBlacklist, "Structure Spawn Point (Blacklist)");
         }
     }
 
@@ -165,7 +164,7 @@ public class CommonConfig {
         }
     }
 
-    private static void processIdListRL(List<? extends String> entries, Set<ResourceLocation> result, String logCategory) {
+    private static void processIdList(List<? extends String> entries, Set<ResourceLocation> result, String logCategory) {
         result.clear();
         for (String entry : entries) {
             if (ResourceLocation.isValidResourceLocation(entry)){
@@ -176,14 +175,19 @@ public class CommonConfig {
         }
     }
 
-    private static void processIdListStr(List<? extends String> entries, Set<String> result, String logCategory) {
-        result.clear();
-        for (String entry : entries) {
-            if (ResourceLocation.isValidResourceLocation(entry)){
-                result.add(entry);
+    private static void updateFlowerBlacklist() {
+        Set<String> newBlacklist = new HashSet<>();
+        for (String entry : FLOWER_BLACKLIST.get()) {
+            if (ResourceLocation.isValidResourceLocation(entry)) {
+                newBlacklist.add(entry);
             } else {
-                LOGGER.error("[RedPackUtils: {}] Invalid ID: {}", logCategory, entry);
+                LOGGER.error("[RedPackUtils: Better Bonemeal (Blacklist)] Invalid ID: {}", entry);
             }
         }
+
+        regenFlowerList = !newBlacklist.equals(flowerBlacklist);
+
+        flowerBlacklist.clear();
+        flowerBlacklist.addAll(newBlacklist);
     }
 }
