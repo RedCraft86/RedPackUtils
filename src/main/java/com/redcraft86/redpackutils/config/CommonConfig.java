@@ -27,6 +27,7 @@ public class CommonConfig {
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> CAMPFIRE_EFFECTS;
 
     private static final ForgeConfigSpec.BooleanValue BONEMEAL_DIRT_GRASS;
+    private static final ForgeConfigSpec.BooleanValue SNEAKY_GRASS_CHANCE;
     private static final ForgeConfigSpec.IntValue SHORT_GRASS_CHANCE;
     private static final ForgeConfigSpec.IntValue TALL_GRASS_CHANCE;
     private static final ForgeConfigSpec.IntValue RANDOM_FLOWER_CHANCE;
@@ -34,6 +35,7 @@ public class CommonConfig {
 
     private static final ForgeConfigSpec.ConfigValue<? extends String> STRUCTURE_SPAWNPOINT;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> SPAWN_POINT_BLACKLIST;
+    private static final ForgeConfigSpec.IntValue STRUCTURE_SEARCH_RADIUS;
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     static {
@@ -56,14 +58,17 @@ public class CommonConfig {
         BUILDER.pop();
         BUILDER.push("Better Bonemeal");
 
-        BONEMEAL_DIRT_GRASS = BUILDER.comment("Lets player bonemeal dirt blocks into grass.")
+        BONEMEAL_DIRT_GRASS = BUILDER.comment("Lets player bonemeal dirt blocks into grass. (Unaffected by other settings in this category)")
             .define("bonemealDirtToGrass", true);
 
+        SNEAKY_GRASS_CHANCE = BUILDER.comment("Requires the player to crouch when using bonemeal for grass chances to work.")
+            .define("sneakyGrassChance", true);
+
         SHORT_GRASS_CHANCE = BUILDER.comment("Chance of short grass spawning from bonemeal.")
-            .defineInRange("shortGrassChance", 30, 0, 100);
+            .defineInRange("shortGrassChance", 50, 0, 100);
 
         TALL_GRASS_CHANCE = BUILDER.comment("Chance of tall grass spawning from bonemeal.")
-            .defineInRange("tallGrassChance", 20, 0, 100);
+            .defineInRange("tallGrassChance", 25, 0, 100);
 
         RANDOM_FLOWER_CHANCE = BUILDER.comment("Chance of spawning a random flower instead of air in place of grass.")
             .defineInRange("randomFlowerChance", 75, 0, 100);
@@ -78,8 +83,11 @@ public class CommonConfig {
         STRUCTURE_SPAWNPOINT = BUILDER.comment("Spawns the player in the nearest structure within a 128-chunk radius from [0, 0, 0]. (a single ID or a Tag, leave empty to disable)")
             .define("structureID", "#minecraft:village");
 
-        SPAWN_POINT_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid structure spawn point. (Only used when structureID is a Tag)")
-            .defineListAllowEmpty("structureBlacklist", List.of("minecraft:village_snowy"),
+        STRUCTURE_SEARCH_RADIUS = BUILDER.comment("Max distance in chunks to search for the structure.")
+            .defineInRange("searchRadius", 128, 32, 512);
+
+        SPAWN_POINT_BLACKLIST = BUILDER.comment("List of structure IDs to ignore when searching for the nearest valid structure via Tags.")
+            .defineListAllowEmpty("tagBlacklist", List.of("minecraft:village_snowy"),
                 obj -> obj instanceof String id && ResourceLocation.isValidResourceLocation(id));
 
         BUILDER.pop();
@@ -94,13 +102,15 @@ public class CommonConfig {
 
     public static boolean regenFlowerList = true;
     public static boolean bonemealDirtGrass = true;
-    public static float shortGrassChance = 0.3f;
-    public static float tallGrassChance = 0.2f;
+    public static boolean sneakyGrassChance = true;
+    public static float shortGrassChance = 0.5f;
+    public static float tallGrassChance = 0.25f;
     public static float randomFlowerChance = 0.75f;
     public static Set<String> flowerBlacklist = new HashSet<>();
 
     public static String structureSpawnPoint = "#minecraft:village";
     public static Set<ResourceLocation> spawnPointBlacklist = new HashSet<>();
+    public static int structureSearchRadius = 128;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
@@ -120,12 +130,14 @@ public class CommonConfig {
         }
 
         bonemealDirtGrass = BONEMEAL_DIRT_GRASS.get();
-        shortGrassChance = Math.min(100.0f, (float) SHORT_GRASS_CHANCE.get() / 100.0f);
-        tallGrassChance = Math.min(100.0f, (float) TALL_GRASS_CHANCE.get() / 100.0f);
-        randomFlowerChance = Math.min(100.0f, (float) RANDOM_FLOWER_CHANCE.get() / 100.0f);
+        sneakyGrassChance = SNEAKY_GRASS_CHANCE.get();
+        shortGrassChance = Mth.clamp((float) SHORT_GRASS_CHANCE.get() / 100.0f, 0.0f, 100.0f);
+        tallGrassChance = Mth.clamp((float) TALL_GRASS_CHANCE.get() / 100.0f, 0.0f, 100.0f);
+        randomFlowerChance = Mth.clamp((float) RANDOM_FLOWER_CHANCE.get() / 100.0f, 0.0f, 100.0f);
         updateFlowerBlacklist();
 
         structureSpawnPoint = STRUCTURE_SPAWNPOINT.get();
+        structureSearchRadius = Mth.clamp(STRUCTURE_SEARCH_RADIUS.get(), 32, 512);
         if (ResourceLocation.isValidResourceLocation(structureSpawnPoint)) {
             processIdList(SPAWN_POINT_BLACKLIST.get(), spawnPointBlacklist, "Structure Spawn Point (Blacklist)");
         }

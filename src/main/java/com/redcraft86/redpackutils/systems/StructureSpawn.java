@@ -120,7 +120,7 @@ public class StructureSpawn {
         ResourceLocation id = key.get().location();
         try {
             Pair<BlockPos, Holder<Structure>> result = level.getChunkSource().getGenerator().findNearestMapStructure(
-                    level, HolderSet.direct(holder), BlockPos.ZERO, 128, false);
+                    level, HolderSet.direct(holder), BlockPos.ZERO, CommonConfig.structureSearchRadius, false);
             if (result != null) {
                 BlockPos Pos = result.getFirst();
                 LOGGER.info("[RedPackUtils: Structure Spawn Point] Structure '{}' found at {}, {}", id, Pos.getX(), Pos.getZ());

@@ -45,7 +45,7 @@ public class BetterBonemeal {
         generateFlowerList((Level)level);
     }
 
-    @SubscribeEvent // Dirt to grass
+    @SubscribeEvent // Dirt to grass, unaffected by sneakyGrassChance
     static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
         Level level = event.getLevel();
         Player player = event.getEntity();
@@ -73,6 +73,13 @@ public class BetterBonemeal {
     static void OnBonemeal(BonemealEvent event) {
         Level level = event.getLevel();
         if (level.isClientSide() || CommonConfig.shortGrassChance >= 0.99f || CommonConfig.tallGrassChance >= 0.99f) {
+            return;
+        }
+
+        Player player = event.getEntity();
+        // isShiftKeyDown doesn't actually check if the Shift key is pressed
+        // It checks if you're crouching, except it's also true if you're crouching in air
+        if (CommonConfig.sneakyGrassChance && !player.isShiftKeyDown()) {
             return;
         }
 
