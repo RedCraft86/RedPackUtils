@@ -1,5 +1,8 @@
 package com.redcraft86.redpackutils.events;
 
+import org.slf4j.Logger;
+import com.mojang.logging.LogUtils;
+
 import com.redcraft86.redpackutils.ModClass;
 import com.redcraft86.redpackutils.ModGameRules;
 import com.redcraft86.redpackutils.config.CommonConfig;
@@ -22,6 +25,8 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EntityEvents {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     @SubscribeEvent
     static void onEntityInteract(PlayerInteractEvent.EntityInteract e) {
         if (e.getLevel().isClientSide() || e.getHand() != InteractionHand.MAIN_HAND) {
