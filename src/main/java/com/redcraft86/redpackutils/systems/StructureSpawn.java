@@ -28,6 +28,9 @@ import net.minecraft.resources.ResourceKey;
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class StructureSpawn {
     private static final Logger LOGGER = LogUtils.getLogger();
+    private static boolean searching = false;
+
+    public static boolean isSearching() { return searching; }
 
     @SubscribeEvent(receiveCanceled = true)
     static void onWorldCreate(LevelEvent.CreateSpawnPosition e) {
@@ -59,6 +62,7 @@ public class StructureSpawn {
             return false;
         }
 
+        searching = true;
         Pair<BlockPos, Holder<Structure>> result = null;
         LOGGER.info("[RedPackUtils: Structure Spawn Point] Attempting to locate structure {}...", structure);
         if (structure.startsWith("#")) {
@@ -67,6 +71,7 @@ public class StructureSpawn {
             result = findStructureByID(level, structure);
         }
 
+        searching = false;
         if (result == null) {
             LOGGER.warn("[RedPackUtils: Structure Spawn Point] Could not find structure, proceeding as normal.");
             return false;

@@ -15,6 +15,7 @@
     "compat.ExplorersCompassMixin",
     "compat.NaturesCompassMixin",
     "CreativeInventoryMixin",
+    "LevelLoadScreenMixin",
     "MinecraftMixin"
   ],
   "minVersion": "0.8"
