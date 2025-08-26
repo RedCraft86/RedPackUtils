@@ -1,5 +1,7 @@
 package com.redcraft86.redpackutils.config;
 
+import com.redcraft86.redpackutils.ModClass;
+
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
 
@@ -9,12 +11,10 @@ import java.util.Map;
 
 import net.minecraft.resources.ResourceLocation;
 
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
-
-import com.redcraft86.redpackutils.ModClass;
 
 @Mod.EventBusSubscriber(modid = ModClass.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientConfig {
