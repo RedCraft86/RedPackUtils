@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClass, String mixinClass) {
-        if (mixinClass.endsWith("ClientEventHandler")) {
+        if (mixinClass.endsWith("ExplorersCompassMixin")) {
             return isModIncluded("explorerscompass");
         }
         if (mixinClass.endsWith("NaturesCompassMixin")) {
