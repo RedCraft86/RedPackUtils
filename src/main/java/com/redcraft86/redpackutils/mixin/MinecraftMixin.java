@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MinecraftMixin {
 
     @Unique
-    private static final int UPDATE_INTERVAL = 10;
+    private static final int UPDATE_INTERVAL = 5;
 
     @Unique
     private static int tickCounter = 0;
