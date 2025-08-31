@@ -1,11 +1,10 @@
-package com.redcraft86.redpackutils.mixin.compat;
+package com.redcraft86.redpackutils.mixin.core;
 
-import java.util.List;
 import java.util.Set;
+import java.util.List;
+import org.objectweb.asm.tree.ClassNode;
 
 import net.minecraftforge.fml.loading.FMLLoader;
-
-import org.objectweb.asm.tree.ClassNode;
 
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
