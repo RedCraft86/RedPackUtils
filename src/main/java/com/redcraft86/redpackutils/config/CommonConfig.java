@@ -20,6 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class CommonConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    private static final ForgeConfigSpec.BooleanValue MIX_ENCHANTMENTS;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> GRIEF_BLACKLIST;
 
     private static final ForgeConfigSpec.IntValue CAMPFIRE_EFFECT_RANGE;
@@ -39,6 +40,9 @@ public class CommonConfig {
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     static {
+        MIX_ENCHANTMENTS = BUILDER.comment("Mix any enchantments together even if they are incompatible.")
+            .define("mixEnchants", true);
+
         GRIEF_BLACKLIST = BUILDER.comment("List of entity IDs that cannot grief the world.")
             .defineListAllowEmpty("mobGriefBlacklist", List.of("minecraft:creeper", "minecraft:enderman", "minecraft:fireball", "minecraft:wither_skull"),
                 obj -> obj instanceof String id && ResourceLocation.isValidResourceLocation(id));
@@ -94,6 +98,7 @@ public class CommonConfig {
     }
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
+    public static boolean mixEnchants = true;
     public static Set<ResourceLocation> griefBlacklist = new HashSet<>();
 
     public static int campfireEffRange = 3;
@@ -119,6 +124,7 @@ public class CommonConfig {
             return;
         }
 
+        mixEnchants = MIX_ENCHANTMENTS.get();
         processIdList(GRIEF_BLACKLIST.get(), griefBlacklist, "Grief Blacklist");
 
         campfireEffRange = CAMPFIRE_EFFECT_RANGE.get();
