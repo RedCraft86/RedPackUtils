@@ -48,14 +48,14 @@ public class CampfireMixin {
             if (CommonConfig.campfireClearHarm)
             {
                 for (MobEffectInstance effect : player.getActiveEffects()) {
-                    if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+                    if (effect != null && effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) {
                         player.removeEffect(effect.getEffect());
                     }
                 }
             }
 
             for (Map.Entry<MobEffect, Integer> entry : CommonConfig.campfireEffects.entrySet()) {
-                if (entry.getKey() != null) {
+                if (entry != null && entry.getKey() != null) {
                     player.addEffect(new MobEffectInstance(entry.getKey(), 40,
                             entry.getValue(), false, false, true));
                 }
